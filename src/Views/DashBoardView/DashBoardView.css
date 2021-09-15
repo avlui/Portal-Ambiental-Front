@@ -1,0 +1,19 @@
+.HomeView{
+
+    height: 100vh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    font-family: monospace;
+    
+    background-color: aquamarine;
+}
+a{
+    color: brown;
+    text-decoration: none;
+}
