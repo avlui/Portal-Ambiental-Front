@@ -1,6 +1,6 @@
 /*
 Libs install:
-  react-leaflet
+  react-leaflet , leaflet
   react-router
   react-circular-progressbar
 */

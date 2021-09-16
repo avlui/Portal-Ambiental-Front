@@ -1,8 +1,15 @@
+.MapView{
+    display: flex;
+    flex-direction: column;
+}
+.NavSpace{
+    height: 8vh;
+}
 .leatlef-container{
     /*
     vw: ancho total de la pantalla del dispositivo
     vh: altura total de la pantalla del dispositivo
     */
     width: 100vw; 
-    height: 100vh;
+    height: 92vh;
 }
