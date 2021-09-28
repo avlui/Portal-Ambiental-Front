@@ -1,37 +1,29 @@
 /*
 Libs install:
-  react-leaflet , leaflet
+  react-leaflet
   react-router
   react-circular-progressbar
 */
 //Components
-import MapView from './Views/MapView/MapView';
-import DashBoardView from './Views/DashBoardView/DashBoardView';
+import MapView from "./Views/MapView/MapView";
+import DashBoardView from "./Views/DashBoardView/DashBoardView";
+import Login from "./Views/Login/login";
+import Navigation from "./Components/Layout/NavBar/NavBar";
+import "bootstrap/dist/css/bootstrap.css";
 
 //Router
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-          <Switch>
-
-              <Route path='/map'>
-                <MapView/>
-              </Route>
-                
-              <Route path='/'>
-                <DashBoardView/>
-              </Route>
-
-          </Switch>
-      </Router>
-    </div>
+    <Router>
+      <Navigation />
+      <Switch>
+        <Route path="/map" component={MapView} />
+        <Route path="/login" component={Login} />
+        <Route path="/" component={DashBoardView} />
+      </Switch>
+    </Router>
   );
 }
 

@@ -1,41 +1,76 @@
-import React from 'react';
+import React, { Component, useEffect } from "react";
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import "leaflet-geosearch/dist/geosearch.css";
+
+import { places } from "./../../assets/data.json";
+import axios from "axios";
 
 /*
 Leaflet components
     Mapcontainer: Contenedor del mapa con caracteristicas generales de este.
     TileLayer: Carga y muestra capas de mosaicos de carreteras, terrenos, etc...
 */
-import { MapContainer, TileLayer} from 'react-leaflet'
-
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 
 //Components
-import SetOfMapMarkers from '../../Components/Common/SetOfMapMarkers/SetOfMapMarkers';
-import NavBar from '../../Components/Layout/NavBar/NavBar';
+import SetOfMapMarkers from "../../Components/Common/SetOfMapMarkers/SetOfMapMarkers";
 
 //Styles
-import './MapView.css';
+import "./MapView.css";
+import icon from "./constants";
+import App from "../../App";
 
-export default function MapView(){
+function LeafletgeoSearch() {
+  const map = useMap();
+  useEffect(() => {
+    const provider = new OpenStreetMapProvider();
 
-    return (
-        <div className='MapView'>
-            <NavBar/>
-            <div className='NavSpace'></div>
-            {/*
-            center: Centro o posición inicial del mapa (lat (y),lng (x))
-            zoom: zoom por defecto para el mapa.
-            scrollWheelZoom: determina si su puede hacer zoom sobre el mapa con el scroll del mouse.
-            */}
-            <MapContainer className='leatlef-container' center={[6.248146825221466,-75.57318536758503]} zoom={13} scrollWheelZoom={true}>
-            
-                <TileLayer 
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //Layer utilizado
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' // autor del layer 
-                />
+    const searchControl = new GeoSearchControl({
+      provider,
+      marker: {
+        icon,
+      },
+    });
 
-                <SetOfMapMarkers/>
+    map.addControl(searchControl);
 
-            </MapContainer>
-        </div>   
-    )
+    return () => map.removeControl(searchControl);
+  }, []);
+
+  return null;
 }
+
+class MapView extends Component {
+  state = {
+    users: [],
+  };
+
+  async componentDidMount() {
+    const res = await axios.get("http://localhost:5000/puntos");
+    this.setState({ users: res.data });
+    console.log(this.state.users);
+  }
+
+  render() {
+    return (
+      <div>
+        <MapContainer
+          className="leatlef-container"
+          center={[6.248146825221466, -75.57318536758503]}
+          zoom={13}
+          scrollWheelZoom={true}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //Layer utilizado
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' // autor del layer
+          />
+
+          <SetOfMapMarkers places={this.state.users} />
+          <LeafletgeoSearch />
+        </MapContainer>
+      </div>
+    );
+  }
+}
+
+export default MapView;
