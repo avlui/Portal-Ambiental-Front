@@ -1,8 +1,24 @@
 .PopUpMarkerCard{
     font-family: monospace, sans-serif;
+    text-align: center;
 
+}
+.PopUpMarkerCard .graphics{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+.PopUpMarkerCard .wasteType{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.PopUpMarkerCard .wasteType img{
+    height: 3vh ;
+    width: 5ch;
+}
+.space{
+    padding: 2ch;
 }
