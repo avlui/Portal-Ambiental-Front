@@ -1,43 +1,44 @@
 import React from "react";
-import { Marker } from "react-leaflet";
 import MapMarkers from "../MapMarkers/MapMarkers";
 
 /* const Points = [
-  [6.155606099269135, -75.59756291638067],
-  [6.098250237268505, -75.63672853139313],
-  [6.166984, -75.338459],
-  [6.248146825221466, -75.57318536758503],
-  [6.153549872907532, -75.39774134151186],
-  [1.248146825221466, -71.5731853675503],
-]; */
+    {   name: 'PointX1',
+        type: 'paperboard',
+        coords: [6.648146825221466,-74.57318536758503]},
+    {   name: 'PointX2',
+        type: 'oil',
+        coords: [5.248146825221466,-75.17318536758503]},
+    {   name: 'PointX3',
+        type: 'coffee',
+        coords: [7.248146825221466,-72.57318536758503]},
+    {   name: 'PointX4',
+        type: 'organic',
+        coords: [6.248146825221466,-75.57318536758503]},
+    {   name: 'PointX5',
+        type: 'glass',
+        coords: [7.248555525221466,-70.57318536758503]},
+    {   name: 'PointX6',
+        type: 'paper',
+        coords: [1.248146825221466,-71.5731853675503]},
+    {   name: 'PointX7',
+        type: 'plastic',
+        coords: [3.548146825221466,-74.1731853675503]}
+] */
 
 const SetOfMapMarkers = (props) => {
   const { places } = props;
   const markers = places.map((place) => (
     //<Marker key={places.indexOf(place)} position={place.geometry} />
-    <MapMarkers
-      key={places.indexOf(place)}
-      position={place.geometry}
-      nameStore={place.name}
-    />
+    <div className="SetOfMapMarkers">
+      <MapMarkers
+        key={place._id}
+        position={place.coords}
+        nameStore={place.name}
+        type={place.type}
+      />
+    </div>
   ));
   return markers;
 };
-
-/* function SetOfMapMarkers() {
-  return (
-    <div className="SetOfMapMarkers">
-      {Points.map((point) => {
-        return (
-          <MapMarkers
-            key={Points.indexOf(point)}
-            lat={point[0]}
-            lgn={point[1]}
-          />
-        );
-      })}
-    </div>
-  );
-} */
 
 export default SetOfMapMarkers;

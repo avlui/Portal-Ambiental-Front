@@ -1,29 +1,41 @@
 /*
 Libs install:
-  react-leaflet
+  react-leaflet , leaflet , leaflet-geosearch
   react-router
   react-circular-progressbar
+  axios
 */
 //Components
-import MapView from "./Views/MapView/MapView";
-import DashBoardView from "./Views/DashBoardView/DashBoardView";
+import MapView from './Views/MapView/MapView';
+import DashBoardView from './Views/DashBoardView/DashBoardView';
 import Login from "./Views/Login/login";
-import Navigation from "./Components/Layout/NavBar/NavBar";
+import ProfileView from './Views/ProfileView/ProfileView'
+
+import NavBar from "./Components/Layout/NavBar/NavBar";
+
+//Styles
 import "bootstrap/dist/css/bootstrap.css";
 
 //Router
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 function App() {
   return (
-    <Router>
-      <Navigation />
-      <Switch>
-        <Route path="/map" component={MapView} />
-        <Route path="/login" component={Login} />
-        <Route path="/" component={DashBoardView} />
-      </Switch>
-    </Router>
+    <div className="App">
+      <Router>
+        <NavBar/>
+          <Switch>
+              <Route path='/map' component ={MapView}/>
+              <Route path="/login" component={Login} />
+              <Route path='/profile' component={ProfileView}/>
+              <Route path='/' component ={DashBoardView}/>
+          </Switch>
+      </Router>
+    </div>
   );
 }
 
