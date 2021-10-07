@@ -1,14 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-const Punto = require("../models/punto.model");
+const { Punto } = require("../models/punto.model");
 
 router.get("/", async (req, res) => {
+  Punto.find(req.query)
+    .then((puntos) => res.json(puntos))
+    .catch((error) => res.status(400).json("Eror: " + error));
+  /* const puntos = await Punto.find();
+  res.json(puntos); */
+});
+
+router.get("/:lel", async (req, res) => {
   /* Punto.find(req.query)
     .then((puntos) => res.json(puntos))
     .catch((error) => res.status(400).json("Eror: " + error)); */
-  const puntos = await Punto.find();
-  res.json(puntos);
+  const publicacionConUsuario = async () => {};
 });
 
 /* router.route("/add").post((req, res) => {
@@ -20,7 +27,7 @@ router.get("/", async (req, res) => {
   const telefono = req.body.telefono;
   const email = req.body.email;
   const horario = req.body.horario;
-  const desperdicios = req.body.desperdicios;
+  const desperdicios = req.body.desperdicios; 
   const reportes = req.body.reportes;
   const estadisticas = req.body.estadisticas;
 

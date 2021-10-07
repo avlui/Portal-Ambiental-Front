@@ -11,21 +11,36 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import SetOfMapMarkers from "../../Components/Common/SetOfMapMarkers/SetOfMapMarkers";
 import GeoSearch from "../../Components/Common/GeoSearch/GeoSearch";
 
+import CheckBox from "../Checkbox/Checkbox";
+
 //Styles
 import "./MapView.css";
 import "leaflet-geosearch/dist/geosearch.css";
 
 class MapView extends Component {
+  mongo = [];
   //const [users, setUsers] = useState([])
   state = {
     users: [],
+    mongo: [],
   };
 
   async componentDidMount() {
     const res = await axios.get("http://localhost:5000/puntos");
     this.setState({ users: res.data });
-    console.log(this.state.users);
+    console.log(this.state.users, "bd");
+
+    this.setState({ mongo: res.data });
+    console.log(this.state.mongo, "mongo");
   }
+
+  handleSearch = (Hijo) => {
+    console.log(Hijo, "hijo");
+
+    this.setState({ users: Hijo }, () => {
+      console.log(this.state.users, "Users padre");
+    });
+  };
 
   render() {
     return (
@@ -45,10 +60,15 @@ class MapView extends Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //Layer utilizado
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' // autor del layer
           />
-
           <SetOfMapMarkers places={this.state.users} />
           <GeoSearch />
         </MapContainer>
+        <div className="filter">
+          <CheckBox
+            handleSearch={this.handleSearch}
+            places={this.state.mongo}
+          />
+        </div>
       </div>
     );
   }
