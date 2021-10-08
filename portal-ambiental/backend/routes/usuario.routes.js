@@ -15,12 +15,16 @@ router.route('/:id').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+    console.log(req.body);
     const nombre = req.body.nombre;
     const contrasena = req.body.contrasena;
-
+    const lat = req.body.lat;
+    const long = req.body.long;
     const newUsuario = new Usuario({
         nombre,
         contrasena,
+        lat,
+        long
     });
 
     newUsuario.save()
