@@ -13,10 +13,12 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 
+const e =
+  "mongodb+srv://giloc:Bateria98.@cluster0.maqwh.mongodb.net/portal_ambiental?retryWrites=true&w=majority";
 const g =
   "mongodb+srv://Juan:123@cluster0.7cb8r.mongodb.net/test?retryWrites=true&w=majority";
 const uri = "mongodb://localhost/wea";
-mongoose.connect(uri);
+mongoose.connect(e);
 
 const connection = mongoose.connection;
 connection.once("open", () => {

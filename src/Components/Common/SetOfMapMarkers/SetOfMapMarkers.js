@@ -27,17 +27,33 @@ import MapMarkers from "../MapMarkers/MapMarkers";
 
 const SetOfMapMarkers = (props) => {
   const { places } = props;
-  const markers = places.map((place) => (
-    //<Marker key={places.indexOf(place)} position={place.geometry} />
-    <div className="SetOfMapMarkers">
+  console.log(places, "buenas a todos");
+
+  const markers = [];
+
+  for (var i in places) {
+    markers.push(
+      <MapMarkers position={places[i].ubicacion} type={places[i].tipo} />
+    );
+    //console.log(places[i].ubicacion, "><----");
+  }
+  /* 
+  const markers = places.map(
+    (place) => (
       <MapMarkers
         key={place._id}
-        position={place.coords}
-        nameStore={place.name}
-        type={place.type}
+        position={place.ubicacion}
+        type={place.tipo}
       />
-    </div>
-  ));
+    ) */
+  //<Marker key={places.indexOf(place)} position={place.geometry} />
+  /*     <div className="SetOfMapMarkers">
+      <MapMarkers
+        key={place._id}
+        position={place.ubicacion}
+      />
+    </div> 
+  );*/
   return markers;
 };
 

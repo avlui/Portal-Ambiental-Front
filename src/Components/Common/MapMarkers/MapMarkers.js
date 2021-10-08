@@ -13,22 +13,35 @@ import PopUpMarkerCard from "../../Layout/PopUpMarkerCard/PopUpMarkerCard";
 import useMarkerIlustration from "../../Hooks/useMarkerIlustration";
 
 export default function MapMarkers(point) {
+  console.log(point, "puntooooo");
+  var b = "";
   //Selecciona el tipo de marcador con base al lor residuos de la empresa
-  const MarkerToIcon = useMarkerIlustration(point.type);
+  if (typeof point.type === "undefined") {
+    b = "default";
+  } else {
+    b = point.type[0];
+  }
+
+  const MarkerToIcon = useMarkerIlustration(b);
+
   const iconToUse = new L.Icon({
     iconUrl: MarkerToIcon,
     iconRetinaUrl: MarkerToIcon,
     iconSize: [55, 55],
   });
+  // console.log(point.position, "aosjdoajsod");
 
   return (
-    <Marker position={point.position} icon={iconToUse}>
+    <Marker
+      position={[point.position.latitud, point.position.longitud]}
+      icon={iconToUse}
+    >
       <Popup>
         <PopUpMarkerCard
-          lat={point.position[0]}
-          lgn={point.position[1]}
-          name={point.name}
-          type={point.type}
+          lat={point.position.latitud}
+          lgn={point.position.longitud}
+          /* name={point.name}
+          type={point.type}  */
         />
       </Popup>
     </Marker>

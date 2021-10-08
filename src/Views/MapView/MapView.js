@@ -18,7 +18,6 @@ import "./MapView.css";
 import "leaflet-geosearch/dist/geosearch.css";
 
 class MapView extends Component {
-  mongo = [];
   //const [users, setUsers] = useState([])
   state = {
     users: [],
@@ -27,11 +26,30 @@ class MapView extends Component {
 
   async componentDidMount() {
     const res = await axios.get("http://localhost:5000/puntos");
-    this.setState({ users: res.data });
-    console.log(this.state.users, "bd");
 
-    this.setState({ mongo: res.data });
-    console.log(this.state.mongo, "mongo");
+    //Giloc implementacion
+    await res.data.forEach((punto) => {
+      const a = [];
+      punto.desperdicios.forEach((desperdicio) => {
+        axios
+          .get(`http://localhost:5000/desperdicios/${desperdicio}`)
+          .then((resi) => {
+            a.push(resi.data.tipo);
+            if (punto.desperdicios.length === a.length) {
+              punto["tipo"] = a;
+              // console.log(res.data, "data");
+              this.setState({ users: res.data }, () => {
+                console.log(this.state.users, "mongo");
+                this.setState({ mongo: res.data }, () => {
+                  console.log(this.state.mongo, "bd");
+                });
+              });
+            }
+          });
+      });
+    });
+    /* this.setState({ mongo: res.data });
+    console.log(this.state.mongo, "mongo"); */
   }
 
   handleSearch = (Hijo) => {
@@ -53,7 +71,7 @@ class MapView extends Component {
         <MapContainer
           className="leatlef-container"
           center={[6.248146825221466, -75.57318536758503]}
-          zoom={13}
+          zoom={10}
           scrollWheelZoom={true}
         >
           <TileLayer

@@ -37,64 +37,63 @@ class Checkbox extends Component {
     const { handleSearch } = this.props;
     console.log(this.props.places);
 
-    if (document.getElementById("paperboard").checked) {
+    if (document.getElementById("periodico").checked) {
       const busqueda = this.props.places.filter(function (n) {
-        return n.type === "paperboard";
+        return n.tipo.includes("periodico");
       });
 
       this.setState({ users: busqueda }, () => {
         handleSearch(this.state.users);
       });
-    } else if (document.getElementById("oil").checked) {
+    } else if (document.getElementById("aceite").checked) {
       const busqueda = this.props.places.filter(function (n) {
-        return n.type === "oil";
+        return n.tipo.includes("aceite");
       });
 
       this.setState({ users: busqueda }, () => {
         handleSearch(this.state.users);
       });
-    } else if (document.getElementById("plastic").checked) {
+    } else if (document.getElementById("plastico").checked) {
       const busqueda = this.props.places.filter(function (n) {
-        return n.type === "plastic";
+        return n.tipo.includes("plastico");
       });
 
       this.setState({ users: busqueda }, () => {
         handleSearch(this.state.users);
       });
-    } else if (document.getElementById("coffee").checked) {
-      console.log("bandera 2");
+    } else if (document.getElementById("cafe").checked) {
       const busqueda = this.props.places.filter(function (n) {
-        return n.type === "coffee";
+        return n.tipo.includes("cafe");
       });
 
       this.setState({ users: busqueda }, () => {
         handleSearch(this.state.users);
       });
-    } else if (document.getElementById("glass").checked) {
+    } else if (document.getElementById("vidrio").checked) {
       const busqueda = this.props.places.filter(function (n) {
-        return n.type === "glass";
+        return n.tipo.includes("vidrio");
       });
 
       this.setState({ users: busqueda }, () => {
         handleSearch(this.state.users);
       });
-    } else if (document.getElementById("organic").checked) {
+    } else if (document.getElementById("organico").checked) {
       const busqueda = this.props.places.filter(function (n) {
-        return n.type === "organic";
+        return n.tipo.includes("organico");
       });
 
       this.setState({ users: busqueda }, () => {
         handleSearch(this.state.users);
       });
-    } else if (document.getElementById("paper").checked) {
+    } else if (document.getElementById("papel").checked) {
       const busqueda = this.props.places.filter(function (n) {
-        return n.type === "paper";
+        return n.tipo.includes("papel");
       });
 
       this.setState({ users: busqueda }, () => {
         handleSearch(this.state.users);
       });
-    } else if (document.getElementById("all").checked) {
+    } else if (document.getElementById("todos").checked) {
       this.setState({ users: this.props.places }, () => {
         handleSearch(this.state.users);
       });
@@ -111,83 +110,83 @@ class Checkbox extends Component {
       <div className="TablaFiltro">
         <label>
           <input
-            id="paperboard"
+            id="periodico"
             type="radio"
             name="filtro"
             onChange={this.handleSearch}
           />
-          paperboard
+          Periodico
         </label>
         <br />
         <label>
           <input
-            id="oil"
+            id="aceite"
             type="radio"
             name="filtro"
             onChange={this.handleSearch}
           />
-          oil
+          Aceite
         </label>
         <br />
         <label>
           <input
-            id="plastic"
+            id="plastico"
             type="radio"
             name="filtro"
             onChange={this.handleSearch}
           />
-          plastic
+          Plastico
         </label>
 
         <br />
         <label>
           <input
-            id="coffee"
+            id="cafe"
             type="radio"
             name="filtro"
             onChange={this.handleSearch}
           />
-          coffee
+          Cafe
         </label>
         <br />
         <label>
           <input
-            id="glass"
+            id="vidrio"
             type="radio"
             name="filtro"
             onChange={this.handleSearch}
           />
-          glass
+          Vidrio
         </label>
         <br />
         <label>
           <input
-            id="organic"
+            id="organico"
             type="radio"
             name="filtro"
             onChange={this.handleSearch}
           />
-          organic
+          Organico
         </label>
         <br />
         <label>
           <input
-            id="paper"
+            id="papel"
             type="radio"
             name="filtro"
             onChange={this.handleSearch}
           />
-          paper
+          Papel
         </label>
         <br />
         <label>
           <input
-            id="all"
+            id="todos"
             type="radio"
             name="filtro"
             onChange={this.handleSearch}
           />
-          all
+          Todos
         </label>
       </div>
     );
