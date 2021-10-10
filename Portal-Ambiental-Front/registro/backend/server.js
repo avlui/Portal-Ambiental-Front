@@ -2,6 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+// const passport = require("passport")
+// const passportLocal = require("passport-local").Strategy;
+// const cookieParser = require("cookie-parser")
+// const session = require("express-session")
+
 
 require('dotenv').config();
 
@@ -10,7 +15,20 @@ const port = process.env.PORT || 5000;
 
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
+
+// app.use(session({
+//   secret: "secreto",
+//   resave: true,
+//   saveUninitialized: true
+// }));
+// app.use(cookieParser("secreto"))
+// app.use(passport.initialize());
+// app.use(passport.session());
+// require("./passportConfig")(passport);
 
 const uri = process.env.DB_URI;
 mongoose.connect(uri);

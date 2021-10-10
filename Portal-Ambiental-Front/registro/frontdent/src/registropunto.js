@@ -7,6 +7,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 
+// let Punto = require('../backend/models/punto.model');
 const coords = [];
 const tipos = [];
 const ids = [];
@@ -53,6 +54,13 @@ class Signup extends Component {
     }
   };
 	handleSubmit(event) {
+    // Punto.findOne({email:document.getElementById("email").value},(err,doc)=>{
+    //   if(err) throw err;
+    //   if(doc){
+    //     alert("email ya registrado")
+    //     return
+    //   }
+    // })
 		if (tipos.length === 0) {
       alert("seleccione tipo(s) de residuo(s)")
       return;
@@ -91,6 +99,7 @@ class Signup extends Component {
 			 desperdicios:ids,
 		 })
 			 .then(response => {
+
 				 if (!response.data.errmsg) {
 					 console.log('registro guardado')
 				 }

@@ -1,6 +1,7 @@
 const router = require('express').Router();
-
 let Punto = require('../models/punto.model');
+// const passport = require("passport")
+// const passportLocal = require("passport-local").Strategy;
 
 router.route('/').get((req, res) => {
     Punto.find(req.query)
@@ -9,6 +10,7 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+
     const nombre = req.body.nombre;
     const contrasena = req.body.nombre;
     const nit = req.body.nit;
@@ -43,9 +45,20 @@ router.route('/add').post((req, res) => {
         .then(() => res.json('Punto añadido!'))
         .catch(error => res.status(400).json('Error: ' + error));
 });
-router.route("/login").post((req,res)=>{
-  
-});
+// router.route("/login").post((req,res, next)=>{
+//   passport.authenticate("local",(err,user,info)=>{
+//     if(err) throw err
+//     if(!user){
+//       alert("no se encontró el usuario")
+//       return
+//     } else{
+//       req.logIn(user, err =>{
+//         if(err) throw err;
+//         console.log(req.user);
+//       })
+//     }
+//   })(req,res,next);
+// });
 router.route('/:id').get((req, res) => {
     Punto.findById(req.params.id)
         .then(punto => res.json(punto))
