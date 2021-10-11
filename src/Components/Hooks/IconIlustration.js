@@ -1,7 +1,7 @@
 import IconsIlustrations from "../../Assets/Ilustrations/IconsIlustrations";
 import { residuos } from "../../Cosnt/Waste";
 
-function useIconIlustration(tipo) {
+function IconIlustration(tipo) {
   // svg for the letleaft icon
   let iconType = undefined;
 
@@ -38,4 +38,4 @@ function useIconIlustration(tipo) {
 
   return iconType;
 }
-export default useIconIlustration;
+export default IconIlustration;

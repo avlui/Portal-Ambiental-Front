@@ -4,7 +4,8 @@ import React ,{useState, useEffect}  from "react";
 //Leaftlet components
 import { 
   Marker, //Marker: Marcador de ubicación en el mapa.
-  Popup //Popup: Ventana emergente de los Markers 
+  Popup, //Popup: Ventana emergente de los Markers 
+  Tooltip //Tooltip for the popup
 } from "react-leaflet"; 
 
 import L from "leaflet"; //leaftletIcon
@@ -62,6 +63,7 @@ export default function MapMarkers({
           tipo={tipo}
         />
       </Popup>
+      <Tooltip>{nombre}</Tooltip>
     </Marker>
   );
 }

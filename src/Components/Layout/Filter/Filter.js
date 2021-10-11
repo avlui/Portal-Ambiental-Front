@@ -1,39 +1,35 @@
 import React, { Component } from "react";
-import useIconIlustration from "../Hooks/useIconIlustration";
-
-//Components
-import CheckBox from "../Layout/Checkbox/Checkbox";
+import IconIlustration from "../../Hooks/IconIlustration";
 
 //Styles
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import "./Filter.css";
-import { compact } from "lodash";
 
 class Filter extends Component {
   state = {
-    users: [],
+    filterUsers: [],
   };
 
-  handleSearch = (e) => {
-    const { handleSearch } = this.props;
-    console.log(this.props.allUsers, "filtro");
+  handleSearch = (rButton) => {
+    const { getFilter } = this.props;
 
     if (document.getElementById("todos").checked) {
+
       const busqueda = this.props.allUsers;
+      console.log(busqueda);
+      this.setState({ filterUsers: busqueda }, () => {
+        getFilter(this.state.filterUsers);
+      });
+    }
+    else if (document.getElementById(rButton.target.id).checked) {
+      const busqueda = this.props.allUsers.filter(function (place) {
+        return place.tipo.includes(rButton.target.id);
+      });
 
       console.log(busqueda);
-      this.setState({ users: busqueda }, () => {
-        handleSearch(this.state.users);
-      });
-    } else if (document.getElementById(e.target.id).checked) {
-      const busqueda = this.props.allUsers.filter(function (n) {
-        return n.tipo.includes(e.target.id);
-      });
-
-      console.log(busqueda);
-      this.setState({ users: busqueda }, () => {
-        handleSearch(this.state.users);
+      this.setState({ filterUsers: busqueda }, () => {
+        getFilter(this.state.filterUsers);
       });
     }
   };
@@ -58,8 +54,8 @@ class Filter extends Component {
                     id="carton"
                     type="radio"
                     name="filtro"
-                    onChange={this.handleSearch}
-                  />
+                    onChange={this.handleSearch} />
+                  <img src={IconIlustration("carton")} alt="carton-icon"></img>
                   Carton
                 </label>
 
@@ -69,8 +65,8 @@ class Filter extends Component {
                     id="aceite"
                     type="radio"
                     name="filtro"
-                    onChange={this.handleSearch}
-                  />
+                    onChange={this.handleSearch} />
+                  <img src={IconIlustration("aceite")} alt="aceite-icon"></img>
                   Aceite
                 </label>
                 <br />
@@ -81,6 +77,7 @@ class Filter extends Component {
                     name="filtro"
                     onChange={this.handleSearch}
                   />
+                  <img src={IconIlustration("plastico")} alt="plastico-icon"></img>
                   Plastico
                 </label>
 
@@ -90,8 +87,8 @@ class Filter extends Component {
                     id="cafe"
                     type="radio"
                     name="filtro"
-                    onChange={this.handleSearch}
-                  />
+                    onChange={this.handleSearch} />
+                  <img src={IconIlustration("cafe")} alt="cafe-icon"></img>
                   Cafe
                 </label>
                 <br />
@@ -100,8 +97,8 @@ class Filter extends Component {
                     id="vidrio"
                     type="radio"
                     name="filtro"
-                    onChange={this.handleSearch}
-                  />
+                    onChange={this.handleSearch} />
+                  <img src={IconIlustration("vidrio")} alt="vidrio-icon"></img>
                   Vidrio
                 </label>
                 <br />
@@ -112,6 +109,7 @@ class Filter extends Component {
                     name="filtro"
                     onChange={this.handleSearch}
                   />
+                  <img src={IconIlustration("organico")} alt="organico-icon"></img>
                   Organico
                 </label>
                 <br />
@@ -120,8 +118,8 @@ class Filter extends Component {
                     id="papel"
                     type="radio"
                     name="filtro"
-                    onChange={this.handleSearch}
-                  />
+                    onChange={this.handleSearch} />
+                  <img src={IconIlustration("papel")} alt="papel-icon"></img>
                   Papel
                 </label>
                 <br />
@@ -130,8 +128,8 @@ class Filter extends Component {
                     id="todos"
                     type="radio"
                     name="filtro"
-                    onChange={this.handleSearch}
-                  />
+                    onChange={this.handleSearch} />
+                  <img src={IconIlustration("todos")} alt="todos-icon"></img>
                   Todos
                 </label>
               </div>

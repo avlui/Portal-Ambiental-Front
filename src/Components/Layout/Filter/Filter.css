@@ -14,3 +14,7 @@ button{
     justify-content: center;
     align-items: center;
 }
+label img{
+    height: 3vh ;
+    width: 5ch;
+}
