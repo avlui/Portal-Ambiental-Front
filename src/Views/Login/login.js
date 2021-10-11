@@ -3,6 +3,9 @@ import axios from "axios";
 import { MapContainer, TileLayer, MapConsumer } from "react-leaflet";
 import L from "leaflet";
 
+//Styles
+import "./Login.css";
+
 // let Punto = require('../backend/models/punto.model');
 const coords = [];
 const tipos = [];
@@ -13,16 +16,18 @@ class Signup extends Component {
   constructor() {
     super();
     this.state = {
-      nombre: "",
-      contrasena: "",
-      nit: "",
-      nombrePunto: "",
-      gerente: "",
+      initialValue: undefined,
+      userAdded: false,
+      nombre: '',
+      contrasena: '',
+      nit: '',
+      nombrePunto: '',
+      gerente: '',
       ubicacion: {},
-      direccion: "",
-      telefono: "",
-      email: "",
-      horario: "",
+      direccion: '',
+      telefono: '',
+      email: '',
+      horario: '',
       desperdicios: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,9 +42,18 @@ class Signup extends Component {
     return re.test(email);
   }
   handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+    if(this.state.userAdded){
+      this.setState({
+        [event.target.name]: this.state.initialValue,
+      });
+      this.setState({userAdded:false})
+    }
+    else{
+      this.setState({
+        [event.target.name]: event.target.value,
+      });
+    }
+    
   }
   handleSearch = (e) => {
     if (document.getElementById(e.target.id).checked) {
@@ -49,15 +63,8 @@ class Signup extends Component {
     }
   };
   handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault(); //evita que el formulario siga su comportamiento por defecto de enviar los datos (POST) a otra pagina
 
-    // Punto.findOne({email:document.getElementById("email").value},(err,doc)=>{
-    //   if(err) throw err;
-    //   if(doc){
-    //     alert("email ya registrado")
-    //     return
-    //   }
-    // })
     if (tipos.length === 0) {
       alert("seleccione tipo(s) de residuo(s)");
       return;
@@ -105,66 +112,56 @@ class Signup extends Component {
           console.log(error);
         });
     });
+    
+    this.setState({userAdded:true})
+    console.log(this.setState.userAdded, )
   }
 
   render() {
     return (
       <div className="SignupForm">
-        <h4>Sign up</h4>
-        <form>
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="usuario">
-                Nombre de usuario:{" "}
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                type="text"
-                id="username"
-                name="nombre"
-                placeholder="Usuario"
-                value={this.state.nombre}
-                onChange={this.handleChange}
-              />
-            </div>
+
+        <h1 className="title text-dark py-5">
+          Sign up
+        </h1>
+
+        <form className="card card-body">
+
+          <div className="form-group input-group my-2">
+            <input
+              className="form-control "
+              type="text"
+              id="username"
+              name="nombre"
+              placeholder="Nombre de usuario"
+              value={this.state.nombre}
+              onChange={this.handleChange}
+            />
           </div>
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="contraseña">
-                contraseña:{" "}
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                placeholder="password"
-                type="password"
-                name="contrasena"
-                value={this.state.contrasena}
-                onChange={this.handleChange}
-              />
-            </div>
+
+          <div className="form-group input-group my-2">
+            <input
+              className="form-control"
+              placeholder="Contraseña"
+              type="password"
+              name="contrasena"
+              value={this.state.contrasena}
+              onChange={this.handleChange}
+            />
           </div>
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="nit">
-                nit:{" "}
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                type="number"
-                id="nit"
-                name="nit"
-                placeholder="nit"
-                value={this.state.nit}
-                onChange={this.handleChange}
-              />
-            </div>
+
+          <div className="form-group input-group my-2">
+            <input
+              className="form-control"
+              placeholder="Nit de la empresa"
+              type="number"
+              id="nit"
+              name="nit"
+              value={this.state.nit}
+              onChange={this.handleChange}
+            />
           </div>
+
           <div className="form-group">
             <div className="col-1 col-ml-auto">
               <label className="form-label" htmlFor="nombre Punto">
@@ -207,6 +204,7 @@ class Signup extends Component {
           <MapContainer
             center={[6.248146825221466, -75.57318536758503]}
             zoom={13}
+            scrollWheelZoom={false}
             style={{
               height: "100vh",
               width: "100vh",
@@ -220,7 +218,7 @@ class Signup extends Component {
             <MapConsumer>
               {(map) => {
                 map.on("click", function (e) {
-                  const { lat, lng } = e.latlng;
+                  // const { lat, lng } = e.latlng;
 
                   b.setLatLng(e.latlng);
                   b.addTo(map);

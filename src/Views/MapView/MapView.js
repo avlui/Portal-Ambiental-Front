@@ -2,10 +2,11 @@
 import React, { Component } from "react";
 
 //Components
+import Spinner from "../../Components/Common/Spinner/Spinner";
 import SetOfMapMarkers from "../../Components/Common/SetOfMapMarkers/SetOfMapMarkers";
 import GeoSearch from "../../Components/Common/GeoSearch/GeoSearch";
-import Filter from "../../Components/Filter/Filter";
-import Spinner from "../../Components/Common/Spinner/Spinner";
+import Filter from "../../Components/Layout/Filter/Filter";
+
 
 //leaft let components
 import {
@@ -24,6 +25,7 @@ class MapView extends Component {
   state = {
     allUsers: [], //Estado para guardar en un arreglo todos los usuarios registrados en la DB
     usersToFilter: [], //Estado para guardar en un arreglo una copia de los usuarios para filtrar información
+    isLoading: true //Estado para no mostrar mapa hasta tener los datos cargados
   };
 
   //Función para cargar todos los usuarios cada que el componente se rederiza y para para restablecer el arreglo con la copia de los usuarios y poder filtrar información nuevamente
@@ -44,9 +46,11 @@ class MapView extends Component {
 
               user["tipo"] = wastesOfUser; //se agrega a los atributos del usuario el arreglo que contiene los tipos de residuos que este genera.
               this.setState({ allUsers: users }, () => {
-                this.setState({ usersToFilter: this.state.allUsers }, () => {
-                  console.log(this.state.usersToFilter, "mongo");
-                });
+                this.setState({ usersToFilter: this.state.allUsers },()=>{
+                  this.setState({isLoading : false}, () =>{
+                    console.log('Data load successfully.')
+                  })
+                })
               });
             }
           });
@@ -54,22 +58,19 @@ class MapView extends Component {
     });
   }
 
-  handleSearch = (Hijo) => {
-    console.log(Hijo, "hijo");
-
-    this.setState({ usersToFilter: Hijo }, () => {
-      console.log(this.state.usersToFilter, "Users padre");
+  handleSearch = (filter) => {
+    this.setState({ usersToFilter: filter }, () => {
     });
   };
 
   render() {
     return (
-      <>
-        {this.state.allUsers === undefined ? (
+      <>{ 
+        (this.state.isLoading) ? 
           <div className="spinner">
             <Spinner />
           </div>
-        ) : (
+         : 
           <div className="MapView">
             <MapContainer
               className="leatlef-container"
@@ -88,13 +89,13 @@ class MapView extends Component {
               <Filter
                 allUsers={this.state.allUsers}
                 usersToFilter={this.state.usersToFilter}
-                handleSearch={this.handleSearch}
+                getFilter={this.handleSearch}
               />
             </div>
           </div>
-        )}
-      </>
-    );
+        
+      }</>
+    )
   }
 }
 export default MapView;
