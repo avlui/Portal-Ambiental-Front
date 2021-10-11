@@ -1,14 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const { Punto } = require("../models/punto.model");
+let Punto = require("../models/punto.model");
 
-router.get("/", async (req, res) => {
+router.route("/").get((req, res) => {
   Punto.find(req.query)
     .then((puntos) => res.json(puntos))
     .catch((error) => res.status(400).json("Eror: " + error));
-  /* const puntos = await Punto.find();
-  res.json(puntos); */
 });
 
 router.get("/:lel", async (req, res) => {
@@ -18,7 +16,9 @@ router.get("/:lel", async (req, res) => {
   const publicacionConUsuario = async () => {};
 });
 
-/* router.route("/add").post((req, res) => {
+router.route("/add").post((req, res) => {
+  const nombre = req.body.nombre;
+  const contrasena = req.body.nombre;
   const nit = req.body.nit;
   const nombrePunto = req.body.nombrePunto;
   const gerente = req.body.gerente;
@@ -27,11 +27,13 @@ router.get("/:lel", async (req, res) => {
   const telefono = req.body.telefono;
   const email = req.body.email;
   const horario = req.body.horario;
-  const desperdicios = req.body.desperdicios; 
+  const desperdicios = req.body.desperdicios;
   const reportes = req.body.reportes;
   const estadisticas = req.body.estadisticas;
 
   const newPunto = new Punto({
+    nombre,
+    contrasena,
     nit,
     nombrePunto,
     gerente,
@@ -49,7 +51,7 @@ router.get("/:lel", async (req, res) => {
     .save()
     .then(() => res.json("Punto añadido!"))
     .catch((error) => res.status(400).json("Error: " + error));
-}); */
+});
 
 router.route("/:id").get((req, res) => {
   Punto.findById(req.params.id)

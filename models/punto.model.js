@@ -1,7 +1,15 @@
 const mongoose = require("mongoose");
-
+const bcrypt = require("bcryptjs");
 const puntoSchema = new mongoose.Schema(
   {
+    nombre: {
+      type: String,
+      required: true,
+    },
+    contrasena: {
+      type: String,
+      required: true,
+    },
     nit: {
       type: String,
       required: true,
@@ -62,7 +70,26 @@ const puntoSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+puntoSchema.methods = {
+  checkPassword: function (inputPassword) {
+    return bcrypt.compareSync(inputPassword, this.contrasena);
+  },
+  hashPassword: (plainTextPassword) => {
+    return bcrypt.hashSync(plainTextPassword, 10);
+  },
+};
+puntoSchema.pre("save", function (next) {
+  if (!this.contrasena) {
+    console.log("models/user.js =======NO PASSWORD PROVIDED=======");
+    next();
+  } else {
+    console.log("models/user.js hashPassword in pre save");
+    this.contrasena = this.hashPassword(this.contrasena, 10);
+
+    next();
+  }
+});
 
 const Punto = mongoose.model("Punto", puntoSchema);
 
-module.exports = { Punto };
+module.exports = Punto;
