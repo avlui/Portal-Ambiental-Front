@@ -1,37 +1,67 @@
-import React from 'react';
+// Hooks
+import React ,{useState, useEffect}  from "react";
 
-/*
-Leaflet components
-    Marker: Marcador de ubicación en el mapa.
-    Popup: Ventana emergente de los Markers 
-*/
-import { Marker, Popup} from 'react-leaflet';
-import L from 'leaflet'; //leaftletIcon
+//Leaftlet components
+import { 
+  Marker, //Marker: Marcador de ubicación en el mapa.
+  Popup //Popup: Ventana emergente de los Markers 
+} from "react-leaflet"; 
+
+import L from "leaflet"; //leaftletIcon
 
 //Components
-import PopUpMarkerCard from '../../Layout/PopUpMarkerCard/PopUpMarkerCard';
-import useMarkerIlustration from '../../Hooks/useMarkerIlustration'
+import PopUpMarkerCard from "../../Layout/PopUpMarkerCard/PopUpMarkerCard";
+import useMarkerIlustration from "../../Hooks/useMarkerIlustration";
 
-export default function MapMarkers({name , type, lat, lgn}) {
-
+export default function MapMarkers({
+    nombre,
+    gerente,
+    ubicacion,
+    direccion,
+    telefono,
+    email,
+    horario,
+    tipo
+  }){
+    
+  const [wasteToIcon, setWasteToIcon] = useState();
+  
+  useEffect(()=>{
     //Selecciona el tipo de marcador con base al lor residuos de la empresa
-    const MarkerToIcon = useMarkerIlustration(type)
-    const iconToUse = new L.Icon({
-        iconUrl : MarkerToIcon,
-        iconRetinaUrl :MarkerToIcon,
-        iconSize : [55, 55]
-    })
+    if (typeof(tipo) === "undefined") {
+      setWasteToIcon("default")
+    } 
+    else {
+      setWasteToIcon(tipo[0])
+    }
+  },[tipo, wasteToIcon])
 
-    return(
-        <Marker position={[lat,lgn]} icon={iconToUse}>
-            <Popup>
-                <PopUpMarkerCard 
-                    lat = {lat}
-                    lgn = {lgn}
-                    name = {name}
-                    type = {type} 
-                />
-            </Popup>
-        </Marker>                 
-    )
+  //Selecciona el tipo de marcador con base al los residuos de la empresa
+  const iconToMarker = useMarkerIlustration(wasteToIcon);
+  const iconToUse = new L.Icon({
+    iconUrl: iconToMarker,
+    iconRetinaUrl: iconToMarker,
+    iconSize: [55, 55],
+  });
+
+  return (
+    <Marker 
+      position={[ubicacion.latitud,ubicacion.longitud]} 
+      icon={iconToUse}
+    >
+      <Popup>
+        <PopUpMarkerCard
+          lat={ubicacion.latitud}
+          lgn={ubicacion.longitud}
+          nombre={nombre}
+          gerente={gerente}
+          direccion={direccion}
+          telefono={telefono}
+          email={email}
+          horario={horario}
+          tipo={tipo}
+        />
+      </Popup>
+    </Marker>
+  );
 }

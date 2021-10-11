@@ -1,39 +1,41 @@
-import IconsIlustrations from '../../Assets/Ilustrations/IconsIlustrations'
-import {waste} from '../../Cosnt/Waste'
+import IconsIlustrations from "../../Assets/Ilustrations/IconsIlustrations";
+import { residuos } from "../../Cosnt/Waste";
 
-function useIconIlustration(type) {
+function useIconIlustration(tipo) {
+  // svg for the letleaft icon
+  let iconType = undefined;
 
-    // svg for the letleaft icon
-    let iconType = undefined
-    
-    if (waste.includes(String(type))){
-
-       switch (type){
-           case 'plastic' :
-                iconType = IconsIlustrations.plasticIcon
-                break
-            case 'coffee' :
-                iconType = IconsIlustrations.coffeeIcon
-                break
-            case 'oil' :
-                iconType = IconsIlustrations.oilIcon
-                break
-            case 'organic' :
-                iconType = IconsIlustrations.organicIcon
-                break
-            case 'glass' :
-                iconType = IconsIlustrations.glassIcon
-                break
-            case 'paper' :
-                iconType = IconsIlustrations.paperIcon
-                break
-            case 'paperboard' :
-                iconType = IconsIlustrations.paperboardIcon
-                break
-           default: iconType = undefined
-       }
+  if (residuos.includes(String(tipo))) {
+    switch (tipo) {
+      case "plastico":
+        iconType = IconsIlustrations.plasticIcon;
+        break;
+      case "cafe":
+        iconType = IconsIlustrations.coffeeIcon;
+        break;
+      case "aceite":
+        iconType = IconsIlustrations.oilIcon;
+        break;
+      case "organico":
+        iconType = IconsIlustrations.organicIcon;
+        break;
+      case "vidrio":
+        iconType = IconsIlustrations.glassIcon;
+        break;
+      case "papel":
+        iconType = IconsIlustrations.paperIcon;
+        break;
+      case "carton":
+        iconType = IconsIlustrations.paperboardIcon;
+        break;
+      case "todos":
+        iconType = IconsIlustrations.allIcon;
+          break;
+      default:
+        iconType = undefined;
     }
+  }
 
-    return iconType
+  return iconType;
 }
 export default useIconIlustration;

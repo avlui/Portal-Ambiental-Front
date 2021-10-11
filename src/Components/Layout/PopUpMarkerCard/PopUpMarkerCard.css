@@ -3,6 +3,12 @@
     text-align: center;
 
 }
+.contactInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align:initial ;
+}
 .PopUpMarkerCard .graphics{
     display: flex;
     flex-direction: row;
@@ -11,9 +17,9 @@
 }
 .PopUpMarkerCard .wasteType{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    text-align: initial;
 }
 .PopUpMarkerCard .wasteType img{
     height: 3vh ;
@@ -21,4 +27,7 @@
 }
 .space{
     padding: 2ch;
+}
+.litleSpace{
+    padding: 1.5ch;
 }

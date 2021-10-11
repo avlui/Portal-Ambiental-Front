@@ -24,12 +24,17 @@ export default class Navigation extends Component {
             <ul className="navbar-nav ms-auto">
               <li className="nav-item ">
                 <Link className="nav-link" to="/map">
-                  Mapa Ricolino
+                  Mapa
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/login">
                   Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">
+                  Register
                 </Link>
               </li>
             </ul>

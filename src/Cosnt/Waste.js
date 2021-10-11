@@ -1,4 +1,5 @@
 export const waste = [
+    'all',
     'paper',
     'paperboard',
     'oil',
@@ -6,3 +7,13 @@ export const waste = [
     'glass',
     'coffee',
     'plastic']
+
+export const residuos = [
+    'todos',
+    'papel',
+    'carton',
+    'aceite',
+    'organico',
+    'vidrio',
+    'cafe',
+    'plastico']

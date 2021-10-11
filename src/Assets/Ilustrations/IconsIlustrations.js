@@ -5,6 +5,7 @@ import paper from  './IconTypes/paper.svg'
 import paperboard from  './IconTypes/paperboard.svg'
 import organic from  './IconTypes/organic.svg'
 import glass from  './IconTypes/glass.svg'
+import all from './IconTypes/all.svg'
 
 
 
@@ -16,5 +17,6 @@ const IconsIlustrations = {
     paperboardIcon: paperboard,
     organicIcon: organic,
     glassIcon: glass,
+    allIcon: all
 }
 export default IconsIlustrations 

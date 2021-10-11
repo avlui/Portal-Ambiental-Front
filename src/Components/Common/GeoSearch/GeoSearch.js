@@ -10,22 +10,21 @@ import L from "leaflet";
 import "leaflet-geosearch/dist/geosearch.css";
 
 function GeoSearch() {
+  const searchIcon = L.icon({
+    iconSize: [25, 41],
+    iconAnchor: [10, 41],
+    popupAnchor: [2, -40],
+    iconUrl: "https://unpkg.com/leaflet@1.6/dist/images/marker-icon.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.6/dist/images/marker-shadow.png",
+  });
+  const map = useMap();
 
-    const searchIcon = L.icon({
-        iconSize: [25, 41],
-        iconAnchor: [10, 41],
-        popupAnchor: [2, -40],
-        iconUrl: "https://unpkg.com/leaflet@1.6/dist/images/marker-icon.png",
-        shadowUrl: "https://unpkg.com/leaflet@1.6/dist/images/marker-shadow.png",
-    });
-    const map = useMap();
-    
-    useEffect(() => {
+  useEffect(() => {
     const provider = new OpenStreetMapProvider();
 
     const searchControl = new GeoSearchControl({
       provider,
-      marker: {searchIcon}
+      marker: { searchIcon },
     });
 
     map.addControl(searchControl);
