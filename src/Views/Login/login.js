@@ -1,25 +1,21 @@
 import React, { Component } from "react";
-import IconIlustration from "../../Components/Hooks/IconIlustration";//Para usar los iconos de los residuos
-import { toast } from 'react-toastify'; //Para notificaciones
+import IconIlustration from "../../Components/Hooks/IconIlustration"; //Para usar los iconos de los residuos
+import { toast } from "react-toastify"; //Para notificaciones
 import { withRouter } from "react-router"; //Para cambiar de rutas
 
 import axios from "axios";
 
 //Constante con residuos
-import { residuos } from "../../Cosnt/Waste"
+import { residuos } from "../../Cosnt/Waste";
 
 // leaft-let components
 import L from "leaflet";
-import {
-  MapContainer,
-  TileLayer,
-  MapConsumer
-} from "react-leaflet";
+import { MapContainer, TileLayer, MapConsumer } from "react-leaflet";
 
 //Styles
 import "./Login.css";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserPlus,
   faKey,
@@ -31,9 +27,8 @@ import {
   faAt,
   faClock,
   faMapMarkerAlt,
-  faRecycle
-} from '@fortawesome/free-solid-svg-icons'
-
+  faRecycle,
+} from "@fortawesome/free-solid-svg-icons";
 
 // let Punto = require('../backend/models/punto.model');
 const coords = [];
@@ -47,16 +42,16 @@ class Signup extends Component {
     this.state = {
       initialValue: undefined,
       userAdded: false,
-      nombre: '',
-      contrasena: '',
-      nit: '',
-      nombrePunto: '',
-      gerente: '',
+      nombre: "",
+      contrasena: "",
+      nit: "",
+      nombrePunto: "",
+      gerente: "",
       ubicacion: {},
-      direccion: '',
-      telefono: '',
-      email: '',
-      horario: '',
+      direccion: "",
+      telefono: "",
+      email: "",
+      horario: "",
       desperdicios: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -71,18 +66,16 @@ class Signup extends Component {
     return re.test(email);
   }
   handleChange(event) {
-    if(this.state.userAdded){
+    if (this.state.userAdded) {
       this.setState({
         [event.target.name]: this.state.initialValue,
       });
-      this.setState({userAdded:false})
-    }
-    else{
+      this.setState({ userAdded: false });
+    } else {
       this.setState({
         [event.target.name]: event.target.value,
       });
     }
-    
   }
   handleSearch = (e) => {
     if (document.getElementById(e.target.id).checked) {
@@ -96,7 +89,7 @@ class Signup extends Component {
 
     if (tipos.length === 0) {
       toast("seleccione tipo(s) de residuo(s)", {
-        type: 'error',
+        type: "error",
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -104,12 +97,12 @@ class Signup extends Component {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
       return;
     }
     if (coords.length === 0) {
       toast("Debes seleccionar la ubicacion del punto en el mapa", {
-        type: 'error',
+        type: "error",
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -117,12 +110,12 @@ class Signup extends Component {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
       return;
     }
     if (!this.checkMail(document.getElementById("email").value)) {
       toast("Email incorrecto", {
-        type: 'error',
+        type: "error",
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -161,7 +154,7 @@ class Signup extends Component {
           if (!response.data.errmsg) {
             console.log("registro guardado");
             toast("¡Registro Exitoso!", {
-              type:'succes',
+              type: "succes",
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
@@ -171,14 +164,14 @@ class Signup extends Component {
               progress: undefined,
             });
 
-            this.props.history.push('/lol')
+            this.props.history.push("/lol");
           }
         })
         .catch((error) => {
           console.log("signup error");
           console.log(error);
           toast("No has llenado todos los campos", {
-            type:'error',
+            type: "error",
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -189,26 +182,22 @@ class Signup extends Component {
           });
         });
     });
-    
-    this.setState({userAdded:true})
-    console.log(this.setState.userAdded, )
+
+    this.setState({ userAdded: true });
+    console.log(this.setState.userAdded);
   }
 
   render() {
     return (
       <div className="SignupForm">
-
         <h1 className="title text-dark py-5">Sign up</h1>
 
         <form className="card card-body">
-
           <div className="accountInformation card card-body my-4">
-
             <div className="form-group form-group row my-2">
               <label htmlFor="username" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faUserPlus} />
-                &nbsp;
-                Nombre de usuario
+                &nbsp; Nombre de usuario
               </label>
               <div className="col-sm-10">
                 <input
@@ -226,8 +215,7 @@ class Signup extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="password" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faKey} />
-                &nbsp;
-                Contraseña
+                &nbsp; Contraseña
               </label>
               <div className="col-sm-10">
                 <input
@@ -241,16 +229,13 @@ class Signup extends Component {
                 />
               </div>
             </div>
-
           </div>
 
           <div className="puntoInformation card card-body my-4">
-
             <div className="form-group  form-group row my-2">
               <label htmlFor="nit" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faIdCardAlt} />
-                &nbsp;
-                Nit de la empresa
+                &nbsp; Nit de la empresa
               </label>
               <div className="col-sm-10">
                 <input
@@ -268,8 +253,7 @@ class Signup extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="nombrePunto" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faBuilding} />
-                &nbsp;
-                Nombre del punto
+                &nbsp; Nombre del punto
               </label>
               <div className="col-sm-10">
                 <input
@@ -287,8 +271,7 @@ class Signup extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="gerente" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faUserTie} />
-                &nbsp;
-                Nombre del gerente
+                &nbsp; Nombre del gerente
               </label>
               <div className="col-sm-10">
                 <input
@@ -306,13 +289,12 @@ class Signup extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="direccion" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faAddressBook} />
-                &nbsp;
-                Direeción del punto
+                &nbsp; Dirección del punto
               </label>
               <div className="col-sm-10">
                 <input
                   className="form-control"
-                  placeholder="Direeción del punto"
+                  placeholder="Dirección del punto"
                   type="text"
                   id="direccion"
                   name="direccion"
@@ -325,8 +307,7 @@ class Signup extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="tel" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faPhoneAlt} />
-                &nbsp;
-                Telefono
+                &nbsp; Telefono
               </label>
               <div className="col-sm-10">
                 <input
@@ -344,8 +325,7 @@ class Signup extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="email" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faAt} />
-                &nbsp;
-                Email
+                &nbsp; Email
               </label>
               <div className="col-sm-10">
                 <input
@@ -363,8 +343,7 @@ class Signup extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="horario" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faClock} />
-                &nbsp;
-                Horario de atención
+                &nbsp; Horario de atención
               </label>
               <div className="col-sm-10">
                 <input
@@ -378,19 +357,15 @@ class Signup extends Component {
                 />
               </div>
             </div>
-
           </div>
 
           <div className="puntoUnication card card-body my-4">
             <div className="form-group  form-group row my-2">
-
               <label id="ubicacion">
                 <FontAwesomeIcon icon={faMapMarkerAlt} />
-                &nbsp;
-                Ubicacion
+                &nbsp; Ubicacion
               </label>
               <div className="MapContainer">
-
                 <MapContainer
                   className="leatlefContainer"
                   center={[6.248146825221466, -75.57318536758503]}
@@ -416,49 +391,47 @@ class Signup extends Component {
                     }}
                   </MapConsumer>
                 </MapContainer>
-
               </div>
-
             </div>
           </div>
 
           <div className="puntoUnication card card-body my-4">
             <label className="form-label" htmlFor="ResiduosCheckBox">
               <FontAwesomeIcon icon={faRecycle} />
-              &nbsp;
-              Tipos desperdicios
+              &nbsp; Tipos desperdicios
             </label>
             <ul className="ResiduosCheckBox">
-              {
-                residuos.map((residuo) => {
-                  if (residuo !== 'todos') {
-                    return (
-                      <li key={`res${residuos.indexOf(residuo)}${residuo}`}>
-                        <label className="Residuo my-2">
-                          <input
-                            id={residuo}
-                            type="checkbox"
-                            name="filtro"
-                            onChange={this.handleSearch}
-                          />
-                          <img src={IconIlustration(`${residuo}`)} alt={`${residuo}-icon`}></img>
-                          <span> &nbsp;{residuo}</span>
-                        </label>
-                      </li>
-                    )
-                  }
-                  else return null
-                })
-              }
+              {residuos.map((residuo) => {
+                if (residuo !== "todos") {
+                  return (
+                    <li key={`res${residuos.indexOf(residuo)}${residuo}`}>
+                      <label className="Residuo my-2">
+                        <input
+                          id={residuo}
+                          type="checkbox"
+                          name="filtro"
+                          onChange={this.handleSearch}
+                        />
+                        <img
+                          src={IconIlustration(`${residuo}`)}
+                          alt={`${residuo}-icon`}
+                        ></img>
+                        <span> &nbsp;{residuo}</span>
+                      </label>
+                    </li>
+                  );
+                } else return null;
+              })}
             </ul>
           </div>
 
-          <button className="btn btn-primary col-mr-auto" onClick={this.handleSubmit}>
+          <button
+            className="btn btn-primary col-mr-auto"
+            onClick={this.handleSubmit}
+          >
             Sign up
           </button>
-
         </form>
-
       </div>
     );
   }
