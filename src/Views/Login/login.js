@@ -1,10 +1,39 @@
 import React, { Component } from "react";
+import IconIlustration from "../../Components/Hooks/IconIlustration";//Para usar los iconos de los residuos
+import { toast } from 'react-toastify'; //Para notificaciones
+import { withRouter } from "react-router"; //Para cambiar de rutas
+
 import axios from "axios";
-import { MapContainer, TileLayer, MapConsumer } from "react-leaflet";
+
+//Constante con residuos
+import { residuos } from "../../Cosnt/Waste"
+
+// leaft-let components
 import L from "leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  MapConsumer
+} from "react-leaflet";
 
 //Styles
 import "./Login.css";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faUserPlus,
+  faKey,
+  faIdCardAlt,
+  faBuilding,
+  faUserTie,
+  faAddressBook,
+  faPhoneAlt,
+  faAt,
+  faClock,
+  faMapMarkerAlt,
+  faRecycle
+} from '@fortawesome/free-solid-svg-icons'
+
 
 // let Punto = require('../backend/models/punto.model');
 const coords = [];
@@ -13,8 +42,8 @@ const ids = [];
 const b = L.marker([0, 0]);
 
 class Signup extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       initialValue: undefined,
       userAdded: false,
@@ -66,15 +95,42 @@ class Signup extends Component {
     event.preventDefault(); //evita que el formulario siga su comportamiento por defecto de enviar los datos (POST) a otra pagina
 
     if (tipos.length === 0) {
-      alert("seleccione tipo(s) de residuo(s)");
+      toast("seleccione tipo(s) de residuo(s)", {
+        type: 'error',
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
       return;
     }
     if (coords.length === 0) {
-      alert("selecciona la ubicacion del local en el mapa");
+      toast("Debes seleccionar la ubicacion del punto en el mapa", {
+        type: 'error',
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
       return;
     }
     if (!this.checkMail(document.getElementById("email").value)) {
-      alert("revisa el email");
+      toast("Email incorrecto", {
+        type: 'error',
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
@@ -104,12 +160,33 @@ class Signup extends Component {
         .then((response) => {
           if (!response.data.errmsg) {
             console.log("registro guardado");
+            toast("¡Registro Exitoso!", {
+              type:'succes',
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+
+            this.props.history.push('/lol')
           }
         })
         .catch((error) => {
           console.log("signup error");
-          alert("No has llenado todos los campos");
           console.log(error);
+          toast("No has llenado todos los campos", {
+            type:'error',
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         });
     });
     
@@ -121,245 +198,270 @@ class Signup extends Component {
     return (
       <div className="SignupForm">
 
-        <h1 className="title text-dark py-5">
-          Sign up
-        </h1>
+        <h1 className="title text-dark py-5">Sign up</h1>
 
         <form className="card card-body">
 
-          <div className="form-group input-group my-2">
-            <input
-              className="form-control "
-              type="text"
-              id="username"
-              name="nombre"
-              placeholder="Nombre de usuario"
-              value={this.state.nombre}
-              onChange={this.handleChange}
-            />
+          <div className="accountInformation card card-body my-4">
+
+            <div className="form-group form-group row my-2">
+              <label htmlFor="username" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faUserPlus} />
+                &nbsp;
+                Nombre de usuario
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control "
+                  type="text"
+                  id="username"
+                  name="nombre"
+                  placeholder="Nombre de usuario"
+                  value={this.state.nombre}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group  form-group row my-2">
+              <label htmlFor="password" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faKey} />
+                &nbsp;
+                Contraseña
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control input-group"
+                  placeholder="Contraseña"
+                  type="password"
+                  id="password"
+                  name="contrasena"
+                  value={this.state.contrasena}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
           </div>
 
-          <div className="form-group input-group my-2">
-            <input
-              className="form-control"
-              placeholder="Contraseña"
-              type="password"
-              name="contrasena"
-              value={this.state.contrasena}
-              onChange={this.handleChange}
-            />
+          <div className="puntoInformation card card-body my-4">
+
+            <div className="form-group  form-group row my-2">
+              <label htmlFor="nit" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faIdCardAlt} />
+                &nbsp;
+                Nit de la empresa
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control"
+                  placeholder="Nit de la empresa"
+                  type="number"
+                  id="nit"
+                  name="nit"
+                  value={this.state.nit}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group  form-group row my-2">
+              <label htmlFor="nombrePunto" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faBuilding} />
+                &nbsp;
+                Nombre del punto
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control"
+                  placeholder="Nombre del punto"
+                  type="text"
+                  id="nombrePunto"
+                  name="nombrePunto"
+                  value={this.state.nombrePunto}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group  form-group row my-2">
+              <label htmlFor="gerente" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faUserTie} />
+                &nbsp;
+                Nombre del gerente
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control"
+                  placeholder="Nombre del gerente"
+                  type="text"
+                  id="gerente"
+                  name="gerente"
+                  value={this.state.gerente}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group  form-group row my-2">
+              <label htmlFor="direccion" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faAddressBook} />
+                &nbsp;
+                Direeción del punto
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control"
+                  placeholder="Direeción del punto"
+                  type="text"
+                  id="direccion"
+                  name="direccion"
+                  value={this.state.direccion}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group  form-group row my-2">
+              <label htmlFor="tel" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faPhoneAlt} />
+                &nbsp;
+                Telefono
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control"
+                  placeholder="Telefono (Celular o fijo)"
+                  type="number"
+                  id="tel"
+                  name="telefono"
+                  value={this.state.telefono}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group  form-group row my-2">
+              <label htmlFor="email" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faAt} />
+                &nbsp;
+                Email
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control"
+                  placeholder="Email@example.com"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-group  form-group row my-2">
+              <label htmlFor="horario" className="col-sm-2 col-form-label">
+                <FontAwesomeIcon icon={faClock} />
+                &nbsp;
+                Horario de atención
+              </label>
+              <div className="col-sm-10">
+                <input
+                  className="form-control"
+                  placeholder="xx:xx am - xx:xx pm "
+                  type="text"
+                  id="horario"
+                  name="horario"
+                  value={this.state.horario}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
           </div>
 
-          <div className="form-group input-group my-2">
-            <input
-              className="form-control"
-              placeholder="Nit de la empresa"
-              type="number"
-              id="nit"
-              name="nit"
-              value={this.state.nit}
-              onChange={this.handleChange}
-            />
+          <div className="puntoUnication card card-body my-4">
+            <div className="form-group  form-group row my-2">
+
+              <label id="ubicacion">
+                <FontAwesomeIcon icon={faMapMarkerAlt} />
+                &nbsp;
+                Ubicacion
+              </label>
+              <div className="MapContainer">
+
+                <MapContainer
+                  className="leatlefContainer"
+                  center={[6.248146825221466, -75.57318536758503]}
+                  zoom={13}
+                  scrollWheelZoom={false}
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //Layer utilizado
+                    attribution='&copy;<a href="http://osm.org/copyright">OpenStreetMap</a> contributors' // autor del layer
+                  />
+                  <MapConsumer>
+                    {(map) => {
+                      map.on("click", function (e) {
+                        // const { lat, lng } = e.latlng;
+
+                        b.setLatLng(e.latlng);
+                        b.addTo(map);
+
+                        coords[0] = b.getLatLng().lat;
+                        coords[1] = b.getLatLng().lng;
+                      });
+                      return null;
+                    }}
+                  </MapConsumer>
+                </MapContainer>
+
+              </div>
+
+            </div>
           </div>
 
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="nombre Punto">
-                Nombre del punto:{" "}
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                type="text"
-                id="nombrePunto"
-                name="nombrePunto"
-                placeholder="nombrePunto"
-                value={this.state.nombrePunto}
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="gerente">
-                Nombre del gerente:{" "}
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                type="text"
-                id="gerente"
-                name="gerente"
-                placeholder="nombre del gerente"
-                value={this.state.gerente}
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
-          <label className="form-label" htmlFor="ubicacion">
-            ubicacion:{" "}
-          </label>
-          <MapContainer
-            center={[6.248146825221466, -75.57318536758503]}
-            zoom={13}
-            scrollWheelZoom={false}
-            style={{
-              height: "100vh",
-              width: "100vh",
-              left: "25%",
-            }}
-          >
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright%22%3EOpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <MapConsumer>
-              {(map) => {
-                map.on("click", function (e) {
-                  // const { lat, lng } = e.latlng;
-
-                  b.setLatLng(e.latlng);
-                  b.addTo(map);
-
-                  coords[0] = b.getLatLng().lat;
-                  coords[1] = b.getLatLng().lng;
-                });
-                return null;
-              }}
-            </MapConsumer>
-          </MapContainer>
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="direccion">
-                Direccion:{" "}
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                type="text"
-                id="direccion"
-                name="direccion"
-                placeholder="direccion"
-                value={this.state.direccion}
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="telefono">
-                telefono:{" "}
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                type="number"
-                id="tel"
-                name="telefono"
-                placeholder="telefono"
-                value={this.state.telefono}
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="email">
-                email
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                type="email"
-                id="email"
-                name="email"
-                placeholder="email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="col-1 col-ml-auto">
-              <label className="form-label" htmlFor="horario">
-                Horario:{" "}
-              </label>
-            </div>
-            <div className="col-3 col-mr-auto">
-              <input
-                className="form-input"
-                type="text"
-                id="horario"
-                name="horario"
-                placeholder="horario"
-                value={this.state.horario}
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
-          <label className="form-label" htmlFor="tipos desperdicios">
-            tipos desperdicios
-          </label>
-          <div>
-            <label>
-              <input
-                id="periodico"
-                type="checkbox"
-                name="filtro"
-                onChange={this.handleSearch}
-              />
-              Periodico
+          <div className="puntoUnication card card-body my-4">
+            <label className="form-label" htmlFor="ResiduosCheckBox">
+              <FontAwesomeIcon icon={faRecycle} />
+              &nbsp;
+              Tipos desperdicios
             </label>
-            <br />
-            <label>
-              <input
-                id="aceite"
-                type="checkbox"
-                name="filtro"
-                onChange={this.handleSearch}
-              />
-              Aceite
-            </label>
-            <br />
-            <label>
-              <input
-                id="vidrio"
-                type="checkbox"
-                name="filtro"
-                onChange={this.handleSearch}
-              />
-              Vidrio
-            </label>
-            <br />
-            <label>
-              <input
-                id="plastico"
-                type="checkbox"
-                name="filtro"
-                onChange={this.handleSearch}
-              />
-              Plastico
-            </label>
+            <ul className="ResiduosCheckBox">
+              {
+                residuos.map((residuo) => {
+                  if (residuo !== 'todos') {
+                    return (
+                      <li key={`res${residuos.indexOf(residuo)}${residuo}`}>
+                        <label className="Residuo my-2">
+                          <input
+                            id={residuo}
+                            type="checkbox"
+                            name="filtro"
+                            onChange={this.handleSearch}
+                          />
+                          <img src={IconIlustration(`${residuo}`)} alt={`${residuo}-icon`}></img>
+                          <span> &nbsp;{residuo}</span>
+                        </label>
+                      </li>
+                    )
+                  }
+                  else return null
+                })
+              }
+            </ul>
           </div>
-          <div className="form-group ">
-            <div className="col-7"></div>
-            <button
-              className="btn btn-primary col-1 col-mr-auto"
-              onClick={this.handleSubmit}
-              type="submit"
-            >
-              Sign up
-            </button>
-          </div>
+
+          <button className="btn btn-primary col-mr-auto" onClick={this.handleSubmit}>
+            Sign up
+          </button>
+
         </form>
+
       </div>
     );
   }
 }
 
-export default Signup;
+export default withRouter(Signup);

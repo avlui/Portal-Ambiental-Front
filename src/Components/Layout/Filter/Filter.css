@@ -8,12 +8,10 @@ button{
     border-radius: 5%;
     box-shadow: 0.5px 0.5px 1.5px 1.5px rgba(0, 0, 0, 0.3)
 }
-.dropdown-menu li{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
+span{text-transform:capitalize;}
+
+li {list-style: none;}
+
 label img{
     height: 3vh ;
     width: 5ch;

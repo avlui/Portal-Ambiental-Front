@@ -9,6 +9,8 @@ import NavBar from "./Components/Layout/NavBar/NavBar";
 
 //Styles
 import "bootstrap/dist/css/bootstrap.css";
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from 'react-toastify';
 
 //Router
 import { 
@@ -28,13 +30,15 @@ function App() {
 
       <div className="App">
         <Router>
+          <ToastContainer/>
           <NavBar />
           <Switch>
-            <Route path="/map" component={MapView} />
+            <Route path="/map"  component={MapView} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <Route path="/profile" component={ProfileView} />
             <Route path="/" component={DashBoardView} />
+            <Route path="/log" render ={(rouerProops)=> <DashBoardView isTogle={true} {...rouerProops}/>} />
           </Switch>
         </Router>
       </div>

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import IconIlustration from "../../Hooks/IconIlustration";
 
+//Constante con residuos
+import { residuos } from "../../../Cosnt/Waste"
+
 //Styles
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
@@ -46,94 +49,26 @@ class Filter extends Component {
           >
             <FontAwesomeIcon icon={faFilter} />
           </button>
+
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li>
-              <div className="TablaFiltro">
-                <label>
-                  <input
-                    id="carton"
-                    type="radio"
-                    name="filtro"
-                    onChange={this.handleSearch} />
-                  <img src={IconIlustration("carton")} alt="carton-icon"></img>
-                  Carton
-                </label>
-
-                <br />
-                <label>
-                  <input
-                    id="aceite"
-                    type="radio"
-                    name="filtro"
-                    onChange={this.handleSearch} />
-                  <img src={IconIlustration("aceite")} alt="aceite-icon"></img>
-                  Aceite
-                </label>
-                <br />
-                <label>
-                  <input
-                    id="plastico"
-                    type="radio"
-                    name="filtro"
-                    onChange={this.handleSearch}
-                  />
-                  <img src={IconIlustration("plastico")} alt="plastico-icon"></img>
-                  Plastico
-                </label>
-
-                <br />
-                <label>
-                  <input
-                    id="cafe"
-                    type="radio"
-                    name="filtro"
-                    onChange={this.handleSearch} />
-                  <img src={IconIlustration("cafe")} alt="cafe-icon"></img>
-                  Cafe
-                </label>
-                <br />
-                <label>
-                  <input
-                    id="vidrio"
-                    type="radio"
-                    name="filtro"
-                    onChange={this.handleSearch} />
-                  <img src={IconIlustration("vidrio")} alt="vidrio-icon"></img>
-                  Vidrio
-                </label>
-                <br />
-                <label>
-                  <input
-                    id="organico"
-                    type="radio"
-                    name="filtro"
-                    onChange={this.handleSearch}
-                  />
-                  <img src={IconIlustration("organico")} alt="organico-icon"></img>
-                  Organico
-                </label>
-                <br />
-                <label>
-                  <input
-                    id="papel"
-                    type="radio"
-                    name="filtro"
-                    onChange={this.handleSearch} />
-                  <img src={IconIlustration("papel")} alt="papel-icon"></img>
-                  Papel
-                </label>
-                <br />
-                <label>
-                  <input
-                    id="todos"
-                    type="radio"
-                    name="filtro"
-                    onChange={this.handleSearch} />
-                  <img src={IconIlustration("todos")} alt="todos-icon"></img>
-                  Todos
-                </label>
-              </div>
-            </li>
+            {
+              residuos.map((residuo) => {
+                return (
+                  <li className="mx-1" key={`res${residuos.indexOf(residuo)}${residuo}`}>
+                    <label>
+                      <input
+                        id={residuo}
+                        type="radio"
+                        name="filtro"
+                        onChange={this.handleSearch}
+                      />
+                      <img src={IconIlustration(`${residuo}`)} alt={`${residuo}-icon`}></img>
+                      <span> &nbsp;{residuo}</span>
+                    </label>
+                  </li>
+                )
+              })
+            }
           </ul>
         </div>
       </div>
