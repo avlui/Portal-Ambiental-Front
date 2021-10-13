@@ -1,4 +1,4 @@
-require("dotenv").config()//Leyendo variabes de entorno
+require("dotenv").config(); //Leyendo variabes de entorno
 // require("./mongo")//Importando y estableciendo la conexión a MongoDB
 
 const express = require("express");
@@ -6,7 +6,6 @@ const cors = require("cors");
 
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-
 
 const path = require("path");
 
@@ -18,7 +17,8 @@ app.use(express.json());
 app.use(cors());
 
 //Remote DB
-const connectionString ="mongodb+srv://giloc:Bateria98.@cluster0.maqwh.mongodb.net/portal_ambiental?retryWrites=true&w=majority";
+const connectionString =
+  "mongodb+srv://giloc:Bateria98.@cluster0.maqwh.mongodb.net/portal_ambiental?retryWrites=true&w=majority";
 
 //local Yarce DB
 const uri = "mongodb://localhost/wea";
@@ -31,15 +31,13 @@ connection.once("open", () => {
 
 const puntoRouter = require("./routes/punto.routes.js");
 const desperdicioRouter = require("./routes/desperdicio.routes.js");
-/*const reporteRouter = require("./routes/reporte.routes.js");
+const reporteRouter = require("./routes/reporte.routes.js");
 const estadisticaRouter = require("./routes/estadistica.routes.js");
-const usuarioRouter = require("./routes/usuario.routes.js"); */
 
 app.use("/puntos", puntoRouter);
 app.use("/desperdicios", desperdicioRouter);
-/*app.use("/reportes", reporteRouter);
+app.use("/reportes", reporteRouter);
 app.use("/estadisticas", estadisticaRouter);
-app.use("/usuario", usuarioRouter); */
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/build")));

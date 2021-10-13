@@ -1,19 +1,9 @@
-.HomeView{
-
-    height: 100vh;
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
-    font-family: monospace;
-    
-    background-color: aquamarine;
+.container {
+  display: flex;
+  margin-top: 10px;
 }
-a{
-    color: brown;
-    text-decoration: none;
+
+.link {
+  text-decoration: none;
+  color: inherit;
 }
