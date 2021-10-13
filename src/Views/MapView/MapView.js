@@ -75,7 +75,7 @@ class MapView extends Component {
             <MapContainer
               className="leatlef-container"
               center={[6.248146825221466, -75.57318536758503]} // center: Centro o posición inicial del mapa (lat (y),lng (x))
-              zoom={5} // zoom: zoom por defecto para el mapa.
+              zoom={6} // zoom: zoom por defecto para el mapa.
               scrollWheelZoom={true} //scrollWheelZoom: determina si su puede hacer zoom sobre el mapa con el scroll del mouse.
             >
               <TileLayer

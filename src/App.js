@@ -1,9 +1,9 @@
 //Components
 import MapView from "./Views/MapView/MapView";
 import DashBoardView from "./Views/DashBoardView/DashBoardView";
-import Login from "./Views/Login/login";
+import Login from "./Views/Login/Login"
 import ProfileView from "./Views/ProfileView/ProfileView";
-import Register from "./Views/Register/Register";
+import Register from "./Views/Register/Register"
 
 import NavBar from "./Components/Layout/NavBar/NavBar";
 
@@ -38,7 +38,7 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/profile" component={ProfileView} />
             <Route path="/" component={DashBoardView} />
-            <Route path="/log" render ={(rouerProops)=> <DashBoardView isTogle={true} {...rouerProops}/>} />
+            <Route path="/" render ={(rouerProops)=> <DashBoardView isTogle={true} {...rouerProops}/>} />
           </Switch>
         </Router>
       </div>
