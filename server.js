@@ -22,7 +22,7 @@ const connectionString ="mongodb+srv://giloc:Bateria98.@cluster0.maqwh.mongodb.n
 
 //local Yarce DB
 const uri = "mongodb://localhost/wea";
-mongoose.connect(connectionString);
+mongoose.connect(process.env.MONGO_URI);
 
 const connection = mongoose.connection;
 connection.once("open", () => {
@@ -31,15 +31,13 @@ connection.once("open", () => {
 
 const puntoRouter = require("./routes/punto.routes.js");
 const desperdicioRouter = require("./routes/desperdicio.routes.js");
-/*const reporteRouter = require("./routes/reporte.routes.js");
+const reporteRouter = require("./routes/reporte.routes.js");
 const estadisticaRouter = require("./routes/estadistica.routes.js");
-const usuarioRouter = require("./routes/usuario.routes.js"); */
 
 app.use("/puntos", puntoRouter);
 app.use("/desperdicios", desperdicioRouter);
-/*app.use("/reportes", reporteRouter);
+app.use("/reportes", reporteRouter);
 app.use("/estadisticas", estadisticaRouter);
-app.use("/usuario", usuarioRouter); */
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/build")));

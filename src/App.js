@@ -3,7 +3,7 @@ import MapView from "./Views/MapView/MapView";
 import DashBoardView from "./Views/DashBoardView/DashBoardView";
 import Login from "./Views/Login/login";
 import ProfileView from "./Views/ProfileView/ProfileView";
-import Register from "./Views/Register/Register";
+import Autoregistro from "./Views/AutorregistroView/AutorregistroView";
 
 import NavBar from "./Components/Layout/NavBar/NavBar";
 
@@ -31,7 +31,7 @@ function App() {
           <NavBar />
           <Switch>
             <Route path="/map" component={MapView} />
-            <Route path="/register" component={Register} />
+            <Route path="/register" component={Autoregistro} />
             <Route path="/login" component={Login} />
             <Route path="/profile" component={ProfileView} />
             <Route path="/" component={DashBoardView} />
