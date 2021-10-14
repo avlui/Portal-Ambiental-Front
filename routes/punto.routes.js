@@ -1,24 +1,14 @@
-const express = require("express");
-const router = express.Router();
+const router = require('express').Router();
 
-let Punto = require("../models/punto.model");
+let Punto = require('../models/punto.model');
 
-router.route("/").get((req, res) => {
+router.route('/').get((req, res) => {
   Punto.find(req.query)
-    .then((puntos) => res.json(puntos))
-    .catch((error) => res.status(400).json("Eror: " + error));
+      .then(puntos => res.json(puntos))
+      .catch(error => res.status(400).json('Eror: ' + error));
 });
 
-router.get("/:lel", async (req, res) => {
-  /* Punto.find(req.query)
-    .then((puntos) => res.json(puntos))
-    .catch((error) => res.status(400).json("Eror: " + error)); */
-  const publicacionConUsuario = async () => {};
-});
-
-router.route("/add").post((req, res) => {
-  const nombre = req.body.nombre;
-  const contrasena = req.body.contrasena;
+router.route('/add').post((req, res) => {
   const nit = req.body.nit;
   const nombrePunto = req.body.nombrePunto;
   const gerente = req.body.gerente;
@@ -32,8 +22,6 @@ router.route("/add").post((req, res) => {
   const estadisticas = req.body.estadisticas;
 
   const newPunto = new Punto({
-    nombre,
-    contrasena,
     nit,
     nombrePunto,
     gerente,
@@ -44,25 +32,46 @@ router.route("/add").post((req, res) => {
     horario,
     desperdicios,
     reportes,
-    estadisticas,
+    estadisticas
   });
 
-  newPunto
-    .save()
-    .then(() => res.json("Punto añadido!"))
-    .catch((error) => res.status(400).json("Error: " + error));
+  newPunto.save()
+      .then(() => res.json('Punto añadido!'))
+      .catch(error => res.status(400).json('Error: ' + error));
 });
 
-router.route("/login").post((req, res) => {
+router.route('/:id').get((req, res) => {
   Punto.findById(req.params.id)
-    .then((desperdicio) => res.json(desperdicio))
-    .catch((error) => res.status(400).json("Error: " + error));
-    
+      .then(punto => res.json(punto))
+      .catch(error => res.status(400).json('Error: ' + error))
 });
-router.route("/:id").get((req, res) => {
+
+router.route('/:id').delete((req, res) => {
+  Punto.findByIdAndDelete(req.params.id)
+      .then(() => res.json('Punto borrado!'))
+      .catch(error => res.status(400).json('Error: ' + error))
+});
+
+router.route('/update/:id').post((req, res) => {
   Punto.findById(req.params.id)
-    .then((punto) => res.json(punto))
-    .catch((error) => res.status(400).json("Error: " + error));
+      .then(punto => {
+        punto.nit = req.body.nit;
+        punto.nombrePunto = req.body.nombrePunto;
+        punto.gerente = req.body.gerente;
+        punto.ubicacion = req.body.ubicacion;
+        punto.direccion = req.body.direccion;
+        punto.telefono = req.body.telefono;
+        punto.email = req.body.email;
+        punto.horaio = req.body.horaio;
+        punto.desperdicios = req.body.desperdicios;
+        punto.reportes = req.body.reportes;
+        punto.estadisticas = req.body.estadisticas;
+
+        punto.save()
+            .then(() => res.json('Punto actualizado!'))
+            .catch(error => res.status(400).json('Error: ' + error));
+      })
+      .catch(error => res.status(400).json('Error: ' + error));
 });
 
 module.exports = router;

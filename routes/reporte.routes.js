@@ -58,6 +58,7 @@ router.route("/update/:id").post((req, res) => {
 });
 
 router.route("/:id").delete((req, res) => {
+
   Reporte.findByIdAndDelete(req.params.id)
     .then(() => res.json("Reporte borrado!"))
     .catch((error) => res.status(400).json("Error: " + error));

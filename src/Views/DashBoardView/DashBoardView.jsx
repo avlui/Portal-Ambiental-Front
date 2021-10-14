@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
 import React, { useState } from "react";
 
-function App() {
+function DashBoardView() {
   const [id, setId] = useState("");
   const [residuo, setResiduo] = useState("");
   const [datos, setDatos] = useState({
@@ -34,6 +34,7 @@ function App() {
   };
 
   const requestDatos = async () => {
+    console.log("sasa")
     let newDatos = {
       enero: 0,
       febrero: 0,
@@ -52,17 +53,18 @@ function App() {
       .get(`http://localhost:5000/puntos/${id}`)
       .then((res) => {
         if (res && res.data.reportes) {
-          console.log("sdasd");
           return res.data;
         }
       });
-
+    console.log("xDespués");
     for (const reporteId of reportesIds) {
+
       const reporteData = await axios
         .get(`http://localhost:5000/reportes/${reporteId}`)
         .then((res) => {
+
           if (residuo === res.data.desperdicio) {
-            console.log("oiooop");
+
 
             return res.data;
           }
@@ -71,7 +73,6 @@ function App() {
         newDatos[reporteData.mes] = reporteData.cantidad_desperdicio;
     }
     setDatos(newDatos);
-    console.log(newDatos, "Datos");
   };
 
   React.useEffect(() => {
@@ -94,4 +95,4 @@ function App() {
   );
 }
 
-export default App;
+export default DashBoardView;

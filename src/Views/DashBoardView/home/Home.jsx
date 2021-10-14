@@ -1,4 +1,4 @@
-import Chart from "../../../Components/Common/chart/Chart.js";
+import Chart from "../../../Components/Common/chart/Chart.jsx";
 import "./home.css";
 import LatestUpdates from "../../../Components/Common/latestUpdates/LatestUpdates";
 import React from "react";
