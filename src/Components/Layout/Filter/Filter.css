@@ -8,10 +8,19 @@ button{
     border-radius: 5%;
     box-shadow: 0.5px 0.5px 1.5px 1.5px rgba(0, 0, 0, 0.3)
 }
+<<<<<<< HEAD:src/Components/Layout/Filter/Filter.css
 span{text-transform:capitalize;}
 
 li {list-style: none;}
 
+=======
+.dropdown-menu li{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+>>>>>>> 1e8444798912f5b25393313024717cf996b2456e:src/Components/Filter/Filter.css
 label img{
     height: 3vh ;
     width: 5ch;
