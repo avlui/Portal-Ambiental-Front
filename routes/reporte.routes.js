@@ -64,4 +64,9 @@ router.route("/:id").delete((req, res) => {
     .catch((error) => res.status(400).json("Error: " + error));
 });
 
+router.route('/last').get((req, res) => {
+    Reporte.find().sort({ $natural: -1 }).limit(1)
+        .then(reporte => res.json(reporte))
+});
+
 module.exports = router;
