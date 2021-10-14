@@ -20,7 +20,7 @@ export default function LatestUpdates({ param })  {
                 <table className="latestTable">
                     <tr className="latestTr">
                         <th className="latestTh">Empresa</th>
-                        <th className="latestTh">Fecha</th>
+                        <th className="latestTh">Mes</th>
                         <th className="latestTh">Residuo</th>
                         <th className="latestTh">Producidos</th>
                         <th className="latestTh">En circulación</th>

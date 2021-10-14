@@ -121,7 +121,6 @@ function DashBoardView() {
                 });
 
 
-
             if (reporteData) {
                 const residuoById = await axios.get(`http://localhost:5000/desperdicios/${reporteData.desperdicio}`).then((res) => {
                     return (res.data.tipo);

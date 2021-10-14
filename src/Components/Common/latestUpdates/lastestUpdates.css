@@ -13,7 +13,7 @@
 
 .latestTable {
     width: 100%;
-    border-spacing: 20px;
+    border-spacing: 25px;
 }
 
 .latestTh {
@@ -60,5 +60,6 @@
 .latestButton.Pending {
     background-color: #ebf1fe;
     color: #2a7ade;
+
 
 }

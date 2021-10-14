@@ -45,8 +45,8 @@ export default function Example({ param }) {
         <XAxis dataKey="name" scale="band" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="cantidad" barSize={20} fill="#2e712a" />
-        <Line type="monotone" dataKey="circulación" stroke="#81e1d9" strokeWidth='1.7' />
+        <Bar dataKey="cantidad" barSize={20} fill="#063333" />
+        <Line type="monotone" dataKey="circulación" stroke="#44d6b5" strokeWidth='1.7' />
       </ComposedChart>
     </ResponsiveContainer>
   );
