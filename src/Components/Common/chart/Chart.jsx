@@ -11,16 +11,19 @@ import {
 } from "recharts";
 
 export default function Example({ param }) {
-  const fitDatos = (datos) => {
-    return Object.keys(param).map((key) => {
+  const fitDatos = () => {
+    return Object.keys(param.datos).map((key) => {
       return {
         name: key,
-        cantidad: param[key],
+        cantidad: param.datos[key],
+        circulación: param.circulacionDatos[key]
       };
     });
   };
-  const [desperdicios, setDesperdicios] = useState(fitDatos(param));
 
+
+  const [desperdicios, setDesperdicios] = useState(fitDatos());
+  console.log(desperdicios);
   useEffect(() => {
     setDesperdicios(fitDatos(param));
   }, [param]);
@@ -42,8 +45,8 @@ export default function Example({ param }) {
         <XAxis dataKey="name" scale="band" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="cantidad" barSize={20} fill="#449342" />
-        <Line type="monotone" dataKey="cantidad" stroke="#3FD0C9" />
+        <Bar dataKey="cantidad" barSize={20} fill="#2e712a" />
+        <Line type="monotone" dataKey="circulación" stroke="#81e1d9" strokeWidth='1.7' />
       </ComposedChart>
     </ResponsiveContainer>
   );

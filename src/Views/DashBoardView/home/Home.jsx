@@ -10,7 +10,7 @@ export default function Home(props) {
         title="Impacto Ambiental"
         grid
         dataKey="Active User"
-        param={props.datos}
+        param={{datos: props.datos, circulacionDatos: props.circulacionDatos}}
       />
       <div className="homeWidgets">
         <LatestUpdates
