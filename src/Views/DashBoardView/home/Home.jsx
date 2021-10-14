@@ -13,7 +13,8 @@ export default function Home(props) {
         param={props.datos}
       />
       <div className="homeWidgets">
-        <LatestUpdates />
+        <LatestUpdates
+            param={props.tablaDatos}/>
       </div>
     </div>
   );

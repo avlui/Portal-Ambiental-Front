@@ -19,7 +19,6 @@ export default function Example({ param }) {
       };
     });
   };
-
   const [desperdicios, setDesperdicios] = useState(fitDatos(param));
 
   useEffect(() => {
