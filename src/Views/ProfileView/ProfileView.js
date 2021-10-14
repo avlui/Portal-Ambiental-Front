@@ -8,8 +8,8 @@ const Autoregistro = () => {
     const [desperdicios, setDesperdicios] = useState([])
     const [tipos, setTipos] = useState([])
     const [opciones, setOpciones] = useState([])
-    const [unidades, setUnidades] = useState(["Kg", "Toneladas", "Litros"])
-    const [punto, setPunto] = useState('6167791cfdd381542f56b232')
+    const [unidades, setUnidades] = useState(["Kilogramos", "Toneladas", "Litros"])
+    const [punto, setPunto] = useState('616779eead2a560fd9c414a0')
 
 
     const onSubmit = (e) => {

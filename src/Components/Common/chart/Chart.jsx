@@ -24,7 +24,6 @@ export default function Example({ param }) {
 
   useEffect(() => {
     setDesperdicios(fitDatos(param));
-    console.log("second");
   }, [param]);
 
   return (

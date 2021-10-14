@@ -136,7 +136,6 @@ class Register extends Component {
           }
         }
       }
-
       axios
         .post("http://localhost:5000/puntos/add", {
           nombre: this.state.nombre,
