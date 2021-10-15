@@ -1,12 +1,12 @@
 // Hooks
-import React ,{useState, useEffect}  from "react";
+import React, { useState, useEffect, Component } from "react";
 
 //Leaftlet components
-import { 
+import {
   Marker, //Marker: Marcador de ubicación en el mapa.
-  Popup, //Popup: Ventana emergente de los Markers 
-  Tooltip //Tooltip for the popup
-} from "react-leaflet"; 
+  Popup, //Popup: Ventana emergente de los Markers
+  Tooltip, //Tooltip for the popup
+} from "react-leaflet";
 
 import L from "leaflet"; //leaftletIcon
 
@@ -15,27 +15,29 @@ import PopUpMarkerCard from "../../Layout/PopUpMarkerCard/PopUpMarkerCard";
 import useMarkerIlustration from "../../Hooks/useMarkerIlustration";
 
 export default function MapMarkers({
-    nombre,
-    gerente,
-    ubicacion,
-    direccion,
-    telefono,
-    email,
-    horario,
-    tipo
-  }){
-    
+  nombre,
+  gerente,
+  ubicacion,
+  direccion,
+  telefono,
+  email,
+  horario,
+  tipo,
+  actualTipo,
+}) {
   const [wasteToIcon, setWasteToIcon] = useState();
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     //Selecciona el tipo de marcador con base al lor residuos de la empresa
-    if (typeof(tipo) === "undefined") {
-      setWasteToIcon("default")
-    } 
-    else {
-      setWasteToIcon(tipo[0])
+
+    if (typeof tipo === "undefined") {
+      setWasteToIcon("default");
+    } else if (actualTipo !== "todos") {
+      setWasteToIcon(actualTipo);
+    } else if (actualTipo === "todos") {
+      setWasteToIcon(tipo[0]);
     }
-  },[tipo, wasteToIcon])
+  }, [tipo, wasteToIcon]);
 
   //Selecciona el tipo de marcador con base al los residuos de la empresa
   const iconToMarker = useMarkerIlustration(wasteToIcon);
@@ -46,10 +48,7 @@ export default function MapMarkers({
   });
 
   return (
-    <Marker 
-      position={[ubicacion.latitud,ubicacion.longitud]} 
-      icon={iconToUse}
-    >
+    <Marker position={[ubicacion.latitud, ubicacion.longitud]} icon={iconToUse}>
       <Popup>
         <PopUpMarkerCard
           lat={ubicacion.latitud}

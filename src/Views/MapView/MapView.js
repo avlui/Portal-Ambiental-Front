@@ -7,7 +7,6 @@ import SetOfMapMarkers from "../../Components/Common/SetOfMapMarkers/SetOfMapMar
 import GeoSearch from "../../Components/Common/GeoSearch/GeoSearch";
 import Filter from "../../Components/Layout/Filter/Filter";
 
-
 //leaft let components
 import {
   MapContainer, //Mapcontainer: Contenedor del mapa con caracteristicas generales de este.
@@ -25,7 +24,8 @@ class MapView extends Component {
   state = {
     allUsers: [], //Estado para guardar en un arreglo todos los usuarios registrados en la DB
     usersToFilter: [], //Estado para guardar en un arreglo una copia de los usuarios para filtrar información
-    isLoading: true //Estado para no mostrar mapa hasta tener los datos cargados
+    isLoading: true, //Estado para no mostrar mapa hasta tener los datos cargados
+    actualType: "todos",
   };
 
   //Función para cargar todos los usuarios cada que el componente se rederiza y para para restablecer el arreglo con la copia de los usuarios y poder filtrar información nuevamente
@@ -46,11 +46,11 @@ class MapView extends Component {
 
               user["tipo"] = wastesOfUser; //se agrega a los atributos del usuario el arreglo que contiene los tipos de residuos que este genera.
               this.setState({ allUsers: users }, () => {
-                this.setState({ usersToFilter: this.state.allUsers },()=>{
-                  this.setState({isLoading : false}, () =>{
-                    console.log('Data load successfully.')
-                  })
-                })
+                this.setState({ usersToFilter: this.state.allUsers }, () => {
+                  this.setState({ isLoading: false }, () => {
+                    console.log("Data load successfully.");
+                  });
+                });
               });
             }
           });
@@ -58,19 +58,24 @@ class MapView extends Component {
     });
   }
 
-  handleSearch = (filter) => {
-    this.setState({ usersToFilter: filter }, () => {
+  handleSearch = (filter, typeFilter) => {
+    this.setState({ usersToFilter: [] }, () => {
+      this.setState({ usersToFilter: filter }, () => {
+        this.setState({ actualType: typeFilter }, () => {
+          console.log(this.state.actualType, "MapView");
+        });
+      });
     });
   };
 
   render() {
     return (
-      <>{ 
-        (this.state.isLoading) ? 
+      <>
+        {this.state.isLoading ? (
           <div className="spinner">
             <Spinner />
           </div>
-         : 
+        ) : (
           <div className="MapView">
             <MapContainer
               className="leatlef-container"
@@ -83,7 +88,10 @@ class MapView extends Component {
                 attribution='&copy;<a href="http://osm.org/copyright">OpenStreetMap</a> contributors' // autor del layer
               />
               <GeoSearch />
-              <SetOfMapMarkers users={this.state.usersToFilter} />
+              <SetOfMapMarkers
+                users={this.state.usersToFilter}
+                actualType={this.state.actualType}
+              />
             </MapContainer>
             <div className="filter">
               <Filter
@@ -93,9 +101,9 @@ class MapView extends Component {
               />
             </div>
           </div>
-        
-      }</>
-    )
+        )}
+      </>
+    );
   }
 }
 export default MapView;
