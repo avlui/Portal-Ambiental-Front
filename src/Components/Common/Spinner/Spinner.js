@@ -1,8 +1,13 @@
-import React from 'react';
-import { SpinnerDotted } from 'spinners-react';
+import React from "react";
+import { SpinnerDotted } from "spinners-react";
 
-export default function Spinner(){
-    return(
-        <SpinnerDotted size={50} thickness={100} speed={100} color="rgba(200, 10, 50, 1)" />
-    )   
+export default function Spinner() {
+  return (
+    <SpinnerDotted
+      size={50}
+      thickness={100}
+      speed={100}
+      color="rgba(10, 200, 50, 1)"
+    />
+  );
 }

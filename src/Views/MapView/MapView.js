@@ -61,9 +61,7 @@ class MapView extends Component {
   handleSearch = (filter, typeFilter) => {
     this.setState({ usersToFilter: [] }, () => {
       this.setState({ usersToFilter: filter }, () => {
-        this.setState({ actualType: typeFilter }, () => {
-          console.log(this.state.actualType, "MapView");
-        });
+        this.setState({ actualType: typeFilter });
       });
     });
   };

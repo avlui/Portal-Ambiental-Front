@@ -1,26 +1,22 @@
 import React, { Component } from "react";
 
 import axios from "axios"; //Para hacer peticiones a la DB
-import IconIlustration from "../../Components/Hooks/IconIlustration";//Para usar los iconos de los residuos
-import CheckEmail from "../../Components/Hooks/CheckEmail" //Para verificar si el imput es un email valido
-import { toast } from 'react-toastify'; //Para notificaciones
+import IconIlustration from "../../Components/Hooks/IconIlustration"; //Para usar los iconos de los residuos
+import CheckEmail from "../../Components/Hooks/CheckEmail"; //Para verificar si el imput es un email valido
+import { toast } from "react-toastify"; //Para notificaciones
 import { withRouter } from "react-router"; //Para cambiar de rutas
 
 //Constante con residuos
-import { residuos } from "../../Cosnt/Waste"
+import { residuos } from "../../Cosnt/Waste";
 
 // leaft-let components
 import L from "leaflet";
-import {
-  MapContainer,
-  TileLayer,
-  MapConsumer
-} from "react-leaflet";
+import { MapContainer, TileLayer, MapConsumer } from "react-leaflet";
 
 //Styles
 import "./Register.css";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserPlus,
   faKey,
@@ -32,29 +28,30 @@ import {
   faAt,
   faClock,
   faMapMarkerAlt,
-  faRecycle
-} from '@fortawesome/free-solid-svg-icons'
+  faRecycle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const coords = [];
 const tipos = [];
 const ids = [];
 const b = L.marker([0, 0]);
+const horario1 = "";
+const horario2 = "";
 
 class Register extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      nombre: '',
-      contrasena: '',
-      nit: '',
-      nombrePunto: '',
-      gerente: '',
+      nombre: "",
+      contrasena: "",
+      nit: "",
+      nombrePunto: "",
+      gerente: "",
       ubicacion: {},
-      direccion: '',
-      telefono: '',
-      email: '',
-      horario: '',
+      direccion: "",
+      telefono: "",
+      email: "",
+      horario: "",
       desperdicios: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -65,19 +62,18 @@ class Register extends Component {
     ids.length = 0;
   }
   handleChange(event) {
-    if(this.state.userAdded){
+    if (this.state.userAdded) {
       this.setState({
         [event.target.name]: this.state.initialValue,
       });
-      this.setState({userAdded:false})
-    }
-    else{
+      this.setState({ userAdded: false });
+    } else {
       this.setState({
         [event.target.name]: event.target.value,
       });
     }
-    
   }
+
   handleSearch = (e) => {
     if (document.getElementById(e.target.id).checked) {
       tipos.push(e.target.id);
@@ -88,9 +84,24 @@ class Register extends Component {
   handleSubmit(event) {
     event.preventDefault(); //evita que el formulario siga su comportamiento por defecto de enviar los datos (POST) a otra pagina
 
-    if (tipos.length === 0) {
-      toast("seleccione tipo(s) de residuo(s)", {
-        type: 'error',
+    if (
+      document.getElementById("horario1").value &&
+      document.getElementById("horario2").value
+    ) {
+      this.setState(
+        {
+          horario:
+            document.getElementById("horario1").value +
+            " - " +
+            document.getElementById("horario2").value,
+        },
+        () => {
+          console.log(this.state.horario);
+        }
+      );
+    } else {
+      toast("Seleccione un horario de atencion", {
+        type: "error",
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -98,12 +109,25 @@ class Register extends Component {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
+      return;
+    }
+    if (tipos.length === 0) {
+      toast("seleccione tipo(s) de residuo(s)", {
+        type: "error",
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
     if (coords.length === 0) {
       toast("Debes seleccionar la ubicacion del punto en el mapa", {
-        type: 'error',
+        type: "error",
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -111,12 +135,39 @@ class Register extends Component {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
       return;
     }
-    if (!CheckEmail(document.getElementById("email").value)) {
+    if (document.getElementById("nit").value.length != 10) {
+      toast("El NIT debe contener 10 digitos", {
+        type: "error",
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    //Esto es temporal, preferible cambiarlo por un metodo mas sofisticado
+    if (document.getElementById("password").value.length < 8) {
+      toast("La contraseña es muy corta", {
+        type: "error",
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    } else if (!CheckEmail(document.getElementById("email").value)) {
       toast("Email incorrecto", {
-        type: 'error',
+        type: "error",
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -154,7 +205,7 @@ class Register extends Component {
           if (!response.data.errmsg) {
             console.log("registro guardado");
             toast("¡Registro Exitoso!", {
-              type:'succes',
+              type: "succes",
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
@@ -163,14 +214,14 @@ class Register extends Component {
               draggable: true,
               progress: undefined,
             });
-            this.props.history.push('/') //Cuando se registre el usuario se redirige al usuario haceia la ruta log
+            this.props.history.push("/"); //Cuando se registre el usuario se redirige al usuario haceia la ruta log
           }
         })
         .catch((error) => {
           console.log("signup error");
           console.log(error);
           toast("No has llenado todos los campos", {
-            type:'error',
+            type: "error",
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -186,19 +237,15 @@ class Register extends Component {
   render() {
     return (
       <div className="SignupForm">
-
         <h1 className="title text-dark py-5">Bienvenido a Portal Ambiental</h1>
         <h2>Registro</h2>
 
-        <form className="card card-body">
-
+        <form className="card card-body" id="form">
           <div className="accountInformation card card-body my-4">
-
             <div className="form-group form-group row my-2">
               <label htmlFor="username" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faUserPlus} />
-                &nbsp;
-                Nombre de usuario
+                &nbsp; Nombre de usuario
               </label>
               <div className="col-sm-10">
                 <input
@@ -216,8 +263,7 @@ class Register extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="email" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faAt} />
-                &nbsp;
-                Email
+                &nbsp; Email
               </label>
               <div className="col-sm-10">
                 <input
@@ -235,8 +281,7 @@ class Register extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="password" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faKey} />
-                &nbsp;
-                Contraseña
+                &nbsp; Contraseña
               </label>
               <div className="col-sm-10">
                 <input
@@ -250,16 +295,13 @@ class Register extends Component {
                 />
               </div>
             </div>
-
           </div>
 
           <div className="puntoInformation card card-body my-4">
-
             <div className="form-group  form-group row my-2">
               <label htmlFor="nit" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faIdCardAlt} />
-                &nbsp;
-                Nit de la empresa
+                &nbsp; Nit de la empresa
               </label>
               <div className="col-sm-10">
                 <input
@@ -277,8 +319,7 @@ class Register extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="nombrePunto" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faBuilding} />
-                &nbsp;
-                Nombre del punto
+                &nbsp; Nombre del punto
               </label>
               <div className="col-sm-10">
                 <input
@@ -296,8 +337,7 @@ class Register extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="gerente" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faUserTie} />
-                &nbsp;
-                Nombre del gerente
+                &nbsp; Nombre del gerente
               </label>
               <div className="col-sm-10">
                 <input
@@ -315,8 +355,7 @@ class Register extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="direccion" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faAddressBook} />
-                &nbsp;
-                Dirección del punto
+                &nbsp; Dirección del punto
               </label>
               <div className="col-sm-10">
                 <input
@@ -334,8 +373,7 @@ class Register extends Component {
             <div className="form-group  form-group row my-2">
               <label htmlFor="tel" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faPhoneAlt} />
-                &nbsp;
-                Telefono
+                &nbsp; Telefono
               </label>
               <div className="col-sm-10">
                 <input
@@ -350,37 +388,47 @@ class Register extends Component {
               </div>
             </div>
 
-            <div className="form-group  form-group row my-2">
+            <div className="form-group  form-group row my-2 ">
               <label htmlFor="horario" className="col-sm-2 col-form-label">
                 <FontAwesomeIcon icon={faClock} />
-                &nbsp;
-                Horario de atención
+                &nbsp; Horario de atención
               </label>
-              <div className="col-sm-10">
+              <div className="col-md-4">
+                <label for="horario1">Hora de apertura</label>
                 <input
-                  className="form-control"
+                  className="form-control right"
                   placeholder="xx:xx am - xx:xx pm "
-                  type="text"
-                  id="horario"
-                  name="horario"
-                  value={this.state.horario}
+                  type="time"
+                  id="horario1"
+                  name="horario1"
+                  value={this.horario1}
+                  onChange={this.handleChange}
+                  placement="left"
+                />
+              </div>
+              <div className="col-md-4">
+                <label for="horario2">Hora de cierre</label>
+
+                <input
+                  type="time"
+                  className="form-control col-xs-3"
+                  placeholder="xx:xx am - xx:xx pm "
+                  id="horario2"
+                  name="horario2"
+                  value={this.horario2}
                   onChange={this.handleChange}
                 />
               </div>
             </div>
-
           </div>
 
           <div className="puntoUnication card card-body my-4">
             <div className="form-group  form-group row my-2">
-
               <label id="ubicacion">
                 <FontAwesomeIcon icon={faMapMarkerAlt} />
-                &nbsp;
-                Ubicacion
+                &nbsp; Ubicacion
               </label>
               <div className="MapContainer">
-
                 <MapContainer
                   className="leatlefContainer"
                   center={[6.248146825221466, -75.57318536758503]}
@@ -406,49 +454,47 @@ class Register extends Component {
                     }}
                   </MapConsumer>
                 </MapContainer>
-
               </div>
-
             </div>
           </div>
 
           <div className="puntoUnication card card-body my-4">
             <label className="form-label" htmlFor="ResiduosCheckBox">
               <FontAwesomeIcon icon={faRecycle} />
-              &nbsp;
-              Tipos desperdicios
+              &nbsp; Tipos desperdicios
             </label>
             <ul className="ResiduosCheckBox">
-              {
-                residuos.map((residuo) => {
-                  if (residuo !== 'todos') {
-                    return (
-                      <li key={`res${residuos.indexOf(residuo)}${residuo}`}>
-                        <label className="Residuo my-2">
-                          <input
-                            id={residuo}
-                            type="checkbox"
-                            name="filtro"
-                            onChange={this.handleSearch}
-                          />
-                          <img src={IconIlustration(`${residuo}`)} alt={`${residuo}-icon`}></img>
-                          <span> &nbsp;{residuo}</span>
-                        </label>
-                      </li>
-                    )
-                  }
-                  else return null
-                })
-              }
+              {residuos.map((residuo) => {
+                if (residuo !== "todos") {
+                  return (
+                    <li key={`res${residuos.indexOf(residuo)}${residuo}`}>
+                      <label className="Residuo my-2">
+                        <input
+                          id={residuo}
+                          type="checkbox"
+                          name="filtro"
+                          onChange={this.handleSearch}
+                        />
+                        <img
+                          src={IconIlustration(`${residuo}`)}
+                          alt={`${residuo}-icon`}
+                        ></img>
+                        <span> &nbsp;{residuo}</span>
+                      </label>
+                    </li>
+                  );
+                } else return null;
+              })}
             </ul>
           </div>
 
-          <button className="btn btn-primary col-mr-auto" onClick={this.handleSubmit}>
+          <button
+            className="btn btn-primary col-mr-auto"
+            onClick={this.handleSubmit}
+          >
             Registrarse
           </button>
-
         </form>
-
       </div>
     );
   }
