@@ -18,7 +18,7 @@ export default function Sidebar(props) {
     const getEmpresa = props.getEmpresa;
 
     React.useEffect(() => {
-        axios.get("http://localhost:5000/puntos").then((res) => {
+        axios.get("/puntos").then((res) => {
             res.data.forEach((punto) => {
                 empresas.push(punto.nombrePunto);
             });
@@ -33,7 +33,7 @@ export default function Sidebar(props) {
         });
     }, []);
     React.useEffect(() => {
-        axios.get("http://localhost:5000/desperdicios").then((res) => {
+        axios.get("/desperdicios").then((res) => {
             res.data.forEach((residuo) => {
                 residuos.push(residuo.tipo);
             });
@@ -50,7 +50,7 @@ export default function Sidebar(props) {
     const getEmpresaSelection = (selection) => {
         setSelectionEmpresa(selection);
 
-        axios.get("http://localhost:5000/puntos").then((res) => {
+        axios.get("/puntos").then((res) => {
             res.data.forEach((punto) => {
                 if (punto.nombrePunto === selection) {
                     getId(punto._id);
@@ -63,7 +63,7 @@ export default function Sidebar(props) {
     const getResiduoSelection = (selection) => {
         setSelectionResiduo(selection);
 
-        axios.get(`http://localhost:5000/desperdicios`).then((res) => {
+        axios.get(`/desperdicios`).then((res) => {
             res.data.forEach((residuo) => {
                 if (residuo.tipo === selection) {
                     getResiduo(residuo._id);

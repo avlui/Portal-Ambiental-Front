@@ -179,7 +179,7 @@ class Register extends Component {
       return;
     }
 
-    axios.get("http://localhost:5000/desperdicios").then((result) => {
+    axios.get("/desperdicios").then((result) => {
       for (var i in result.data) {
         for (var j in tipos) {
           if (tipos[j].includes(result.data[i].tipo)) {
@@ -188,7 +188,7 @@ class Register extends Component {
         }
       }
       axios
-        .post("http://localhost:5000/puntos/add", {
+        .post("/puntos/add", {
           nombre: this.state.nombre,
           contrasena: this.state.contrasena,
           nit: this.state.nit,

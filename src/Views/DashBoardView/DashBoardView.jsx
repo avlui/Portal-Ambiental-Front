@@ -78,7 +78,7 @@ function DashBoardView() {
             diciembre: 0,
         };
         const {reportes: reportesIds} = await axios
-            .get(`http://localhost:5000/puntos/${id}`)
+            .get(`/puntos/${id}`)
             .then((res) => {
                 if (res && res.data.reportes) {
                     return res.data;
@@ -86,7 +86,7 @@ function DashBoardView() {
             });
         for (const reporteId of reportesIds) {
             const reporteData = await axios
-                .get(`http://localhost:5000/reportes/${reporteId}`)
+                .get(`/reportes/${reporteId}`)
                 .then((res) => {
                     if (residuo === res.data.desperdicio)
                         return res.data;
@@ -105,7 +105,7 @@ function DashBoardView() {
         let newTablaDatos = [];
 
         const {reportes: reportesIds} = await axios
-            .get(`http://localhost:5000/puntos/${id}`)
+            .get(`/puntos/${id}`)
             .then((res) => {
                 if (res && res.data.reportes) {
                     return res.data;
@@ -114,7 +114,7 @@ function DashBoardView() {
 
         for (const reporteId of reportesIds) {
             const reporteData = await axios
-                .get(`http://localhost:5000/reportes/${reporteId}`)
+                .get(`/reportes/${reporteId}`)
                 .then((res) => {
                     if (id === res.data.punto)
                         return res.data;
@@ -122,7 +122,7 @@ function DashBoardView() {
 
 
             if (reporteData) {
-                const residuoById = await axios.get(`http://localhost:5000/desperdicios/${reporteData.desperdicio}`).then((res) => {
+                const residuoById = await axios.get(`/desperdicios/${reporteData.desperdicio}`).then((res) => {
                     return (res.data.tipo);
                 });
                 newTablaDatos.push(

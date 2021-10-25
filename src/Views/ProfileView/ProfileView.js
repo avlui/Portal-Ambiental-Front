@@ -25,13 +25,13 @@ const Autoregistro = () => {
             cantidad_circulacion: datos.circulacion
         }
         console.log(body);
-        axios.post('http://localhost:5000/reportes/add', body).then((res) => {
-            axios.get('http://localhost:5000/reportes/last').then((res_2) => {
-                axios.get(`http://localhost:5000/puntos/${body.punto}`).then((res) => {
+        axios.post('/reportes/add', body).then((res) => {
+            axios.get('/reportes/last').then((res_2) => {
+                axios.get(`/puntos/${body.punto}`).then((res) => {
                     console.log(res.data);
                     res.data.reportes.push(res_2.data[0]._id)
                     console.log(res.data);
-                    axios.post(`http://localhost:5000/puntos/update/${body.punto}`, res.data).then((res) => console.log(res))
+                    axios.post(`/puntos/update/${body.punto}`, res.data).then((res) => console.log(res))
                 })
             })
         })
@@ -48,14 +48,14 @@ const Autoregistro = () => {
 
     React.useEffect(() => {
         setUnidades(unidades.map((unidad) => <MenuItem key={unidad} value={unidad}> {unidad} </MenuItem>))
-        axios.get(`http://localhost:5000/puntos/${punto}`).then((res) => {
+        axios.get(`/puntos/${punto}`).then((res) => {
             setDesperdicios(res.data.desperdicios)
         })
     }, [])
 
     React.useEffect(() => {
         desperdicios.forEach(desperdicio => {
-            axios.get(`http://localhost:5000/desperdicios/${desperdicio}`).then((res) => {
+            axios.get(`/desperdicios/${desperdicio}`).then((res) => {
                 tipos.unshift(res.data.tipo)
                 setTipos(tipos.concat([]))
             })

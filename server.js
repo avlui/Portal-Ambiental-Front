@@ -17,8 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 //Remote DB
-const connectionString =
-  "mongodb+srv://giloc:Bateria98.@cluster0.maqwh.mongodb.net/portal_ambiental?retryWrites=true&w=majority";
+const connectionString = process.env.MONGO_URI
 
 //local Yarce DB
 const uri = "mongodb://localhost/wea";
@@ -26,7 +25,7 @@ mongoose.connect(connectionString);
 
 const connection = mongoose.connection;
 connection.once("open", () => {
-  console.log("MongoDb database connection successfull :D lel");
+  console.log("MongoDb database connection successfull");
 });
 
 const puntoRouter = require("./routes/punto.routes.js");

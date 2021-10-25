@@ -30,14 +30,14 @@ class MapView extends Component {
 
   //Función para cargar todos los usuarios cada que el componente se rederiza y para para restablecer el arreglo con la copia de los usuarios y poder filtrar información nuevamente
   async componentDidMount() {
-    const response = await axios.get("http://localhost:5000/puntos"); //Solicitando las notas guardadas en el servidor para mostrarlas en pantalla.
+    const response = await axios.get("/puntos"); //Solicitando las notas guardadas en el servidor para mostrarlas en pantalla.
     const users = response.data; //Datos de los usuarios registrados en la DB
     await users.forEach((user) => {
       const wastesOfUser = []; // Arreglo para guardar los tipos de residuos que genera el usuario
       const directionOfwastes = user.desperdicios; //Arreglo que contiene las direcciones hacia otra tabla que guarda la información sobre los residuos que genera el usuario
       directionOfwastes.forEach((wasteDirection) => {
         axios
-          .get(`http://localhost:5000/desperdicios/${wasteDirection}`)
+          .get(`/desperdicios/${wasteDirection}`)
           .then((currentWaste) => {
             const typeOfWaste = currentWaste.data.tipo; //Variable que guarda el tipo de residuo de los residuos que genera el usuario
             wastesOfUser.push(typeOfWaste);
